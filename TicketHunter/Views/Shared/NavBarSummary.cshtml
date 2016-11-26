@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNet.Identity
+@model TicketHunter.Models.NavbarViewModel
+
+<div id="nav-first-row">
+    @*<div class="hidden-xs">
+            <a href="/Event/List" class="navbar-left logo"><img src="~/Content/img/tickets.png"></a>
+        </div>*@
+    <div class="row">
+        <div id="nav-center" class="col-md-3 hidden-xs">
+            <div class="hidden-xs hidden-sm company_whole_name" onselectstart="return false">
+                <a href="/Event/List" class="homePage">
+                    <span class="company_name_1">Ticket</span>
+                    <img src="~/Content/img/tickets.png">
+                    <span class="company_name_2">Hunter</span>
+                </a>
+            </div>
+        </div>
+        <div class="visible-xs logo_mobile">
+            <img height="100" width="100" src="~/Content/img/tickets.png">
+        </div>
+        <div class="col-xs-12 col-md-3">
+            <input id="searchInput">
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-light">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <i class="fa fa-list fa-3x navbar-toggle collapsed pointer" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"></i>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                @foreach (var e in Model.Categories)
+                {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle category" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="@e.Icon" id="iconsNavbar"></i>@e.EventCategoryName<span class="caret"></span></a>
+                        <ul class="dropdown-menu categoryItems">
+                            <li>@Html.RouteLink("Pokaż wszystkie...", new { controller = "Event", action = "List", categoryname = e.EventCategoryName, categoryId = e.EventCategoryID })</li>
+                            @foreach (var sub in e.SubCategories.Where(x => x.EventCategoryID == e.EventCategoryID))
+                            {
+                                <li>@Html.RouteLink(sub.EventSubCategoryName, new { controller = "Event", action = "List", categoryName = e.EventCategoryName, categoryId = e.EventCategoryID, subcategoryName = sub.EventSubCategoryName, subcategoryId = sub.EventSubCategoryID })</li>
+                            }
+                        </ul>
+                    </li>
+                }
+            </ul>
+            <ul class="nav navbar-nav navbar-right ">
+                <li class="dropdown">
+                    @if (Request.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+
+                            <a href="#" class="dropdown userDrop" data-toggle="dropdown"><i class="glyphicon glyphicon-user" id="iconsNavbar"></i><strong id="userName">@User.Identity.GetUserName()</strong><span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="@Url.Action("UserProfile", "Account")">Twój profil</a></li>
+                                <li><a href="#">Koszyk(0)</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                            </ul>
+                        }
+                    }
+                    else
+                    {
+                        <a href="#" class="dropdown userDrop" data-toggle="dropdown"><i class="glyphicon glyphicon-user" id="iconsNavbar"></i><b>Zaloguj</b> <span class="caret"></span></a>
+                        <ul id="login-dp" class="dropdown-menu">
+                            <li>
+                                <div class="row">
+                                    @*@using (Html.BeginForm("MemberLoginSummary", "Auth"))
+                                        {*@
+                                    <div class="col-md-12">
+                                        Zaloguj przez
+                                        <div class="social-buttons">
+                                            <a href="#" class="btn btn-primary"><i class="fa fa-facebook"></i> Facebook</a>
+                                        </div>
+                                        lub
+                                        <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+                                            <div class="form-group">
+                                                <label class="sr-only" for="exampleInputEmail2">adres email</label>
+                                                @Html.TextBoxFor(m => m.LoginModel.Email, null, new { @class = "form-control", placeholder = "Adres email" })
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="exampleInputPassword2">hasło</label>
+                                                @Html.TextBoxFor(m => m.LoginModel.Password, null, new { @class = "form-control", placeholder = "Hasło" })
+                                                <div class="help-block text-right">
+                                                    <a href="">Zapomniałeś hasła ?</a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-block">Zaloguj</button>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox"> Pamiętaj mnie
+                                                </label>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    @*}*@
+                                    <div class="bottom text-center">
+                                        Niemasz konta? @Html.ActionLink("Zarejestruj się", "Account", "Account")
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

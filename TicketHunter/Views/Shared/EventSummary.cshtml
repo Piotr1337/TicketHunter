@@ -1,0 +1,76 @@
+﻿@model TicketHunter.Domain.Entities.Events
+
+
+<div class="hidden-md hidden-sm col-xs-12 col-lg-3">
+        <a href="#" id="linkEvent">
+            <div class="thumbnail">
+                @if (Model.ImageData != null)
+                {
+                    <div class="ratio_big-img loading">
+                        <img class="b-lazy" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="@Url.Action("GetImage", "Event", new {Model.EventID})">
+                    </div>
+                }
+                <div class="caption">
+                    <h4>@Html.RouteLink(Model.EventName, new {controller = "Event", action = "ShowEvent", eventId = Model.EventID})</h4>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <b>Data rozpoczęcia:</b>
+                            <p>@Model.EventStartDateTime.Value.Date.ToLongDateString()</p>
+                            <b>Data zakończenia:</b>
+                            <p>@Model.EventEndDateTime.Value.Date.ToLongDateString()</p>
+                        </div>
+                        <div class="hidden-md col-xs-6 col-sm-6 col-md-6">
+                            <b>Cena biletu od:</b>
+                            @if (Model.Ticket.Count > 0)
+                            {
+                                <strong>@Model.Ticket.Select(ticket => ticket.Price).Min()&nbsp;PLN</strong>
+                            }
+                            else
+                            {
+                                <strong>Brak biletów</strong>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <a href="@Url.Action("ShowEvent", "Event", new { eventId = Model.EventID })" class="btn btn-primary btn-md" role="button" id='buyTicket'><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Kup bilet</a>
+            </div>
+        </a>
+    </div>
+<div class="container visible-md visible-sm">
+    <div class="row">
+        <div class="well">
+            <h1 class="text-center">@Model.EventName</h1>
+            <div class="list-group">
+                <a href="#" class="list-group-item">
+                    <div class="media col-md-5">
+                        <figure class="pull-left">
+                            <img class="media-object img-rounded img-responsive" src="@Url.Action("GetImage", "Event", new {Model.EventID})" alt="placehold.it/350x250">
+                        </figure>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="list-group-item-text">
+                        <h2>Data rozpoczęcia: </h2>
+                        <h4>@Model.EventStartDateTime.Value.Date.ToLongDateString()</h4>
+                        <h2>Data zakończenia: </h2>
+                        <h4>@Model.EventEndDateTime.Value.Date.ToLongDateString()</h4>
+                        </p>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        @if (Model.Ticket.Count > 0)
+                        {
+                            <h2>Od @Model.Ticket.Select(ticket => ticket.Price).Min() <small> PLN </small></h2>
+                        }
+                        else
+                        {
+                            <strong>Brak biletów</strong>
+                        }
+                        <button type="button" class="btn btn-default btn-lg btn-block"> Kup Bilet </button>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

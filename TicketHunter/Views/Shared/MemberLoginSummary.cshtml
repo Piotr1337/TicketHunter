@@ -1,0 +1,76 @@
+﻿@model TicketHunter.Models.AuthModelView
+@using Microsoft.Owin.Security
+<div class="col-md-6">
+    @using (Html.BeginForm("MemberLoginSummary", "Account", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.ReturnUrl)
+        <h4 class="accountText">MOJE KONTO:<b>LOGOWANIE</b></h4>
+        @Html.TextBoxFor(m => m.LoginModel.Email, null, new { @class = "form-control", placeholder = "Adres email", id = "Email" })
+        @Html.ValidationMessageFor(m => m.LoginModel.Email)
+        <br />
+        @Html.TextBoxFor(m => m.LoginModel.Password, null, new { @class = "form-control", placeholder = "Hasło", type = "password" })
+        @Html.ValidationMessageFor(m => m.LoginModel.Password)
+        <br />
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Pamiętaj mnie
+            </label>
+        </div>
+        <a href="">Zapomniałeś hasła ?</a>
+        <button type="submit" class="btn btn-primary btn-block mt15">Zaloguj</button>
+    }
+    <div class="social-buttons">
+        @using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl}, FormMethod.Post, new { id= "fbForm" }))
+        {
+            var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+            @Html.AntiForgeryToken()
+            <div id="socialLoginList" class="mt15">
+                <p>
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        <strong>Masz konto na @p.Caption?</strong>
+                            <br />
+                            @*<strong>Masz konto na @p.Caption?</strong><a href="javascript: submitForm();" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType"> &nbsp; zaloguj się</a>*@
+                            @*<button type="submit" class="btn btn-primary" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType"><i class="fa fa-facebook"></i>@p.AuthenticationType</button>*@
+                            @*<i class="fa fa-facebook-official fa-3x faceLogin" aria-hidden="true" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType"></i>
+                            <button class="btn btn-primary icon-save">Button With Icon</button>*@
+                            <button type="submit" class="fbbutton" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType">
+                                <i class="fa fa-facebook-official fa-3x faceLogin"></i>
+                            </button>
+                    }
+                </p>
+            </div>
+        }
+    </div>
+
+
+    
+    @*@{
+        var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+        if (loginProviders.Count() == 0)
+        {
+            <div>
+                <p>
+                    There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+                    for details on setting up this ASP.NET application to support logging in via external services.
+                </p>
+            </div>
+        }
+        else
+        {
+            using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+            {
+                @Html.AntiForgeryToken()
+                <div id="socialLoginList">
+                    <p>
+                        @foreach (AuthenticationDescription p in loginProviders)
+                        {
+                            <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                        }
+                    </p>
+                </div>
+            }
+        }
+    }*@
+</div>

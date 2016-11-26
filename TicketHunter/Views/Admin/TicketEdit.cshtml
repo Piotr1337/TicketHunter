@@ -1,0 +1,61 @@
+﻿@model TicketHunter.Models.TicketViewModel
+
+@{
+    ViewBag.Title = "TicketEdit";
+    Layout = "~/Views/Admin/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h2>Edycja @Model.Title</h2>
+    </div>
+</div>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm("TicketEdit", "Admin", FormMethod.Post))
+            {
+                @Html.HiddenFor(m => m.TicketID)
+                @Html.HiddenFor(m => m.EventID)
+
+                @Html.LabelFor(m => m.Title)
+                @Html.TextBoxFor(m => m.Title, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Title)
+                <br/>
+                @Html.LabelFor(m => m.DateOfEvent)
+                <div class='input-group date DateOfEvent'>
+                    @Html.TextBoxFor(m => m.DateOfEvent, null, new {@class = "form-control"})
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                @Html.ValidationMessageFor(m => m.DateOfEvent)
+                <br/>
+                @Html.LabelFor(m => m.Location)
+                @Html.TextBoxFor(m => m.Location, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Location)
+                <br/>
+                @Html.LabelFor(m => m.ArtistID)
+                @Html.DropDownListFor(m => m.ArtistID, Model.ArtistList, new { @class = "form-control chosen", style = "width: 360px;", id = "artistChosen" });
+                <br/>
+                @Html.LabelFor(m => m.Price)
+                @Html.TextBoxFor(m => m.Price, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Price)
+
+                <div class="panel-footer col-md-12">
+                    <input type="submit" value="Zapisz" class="btn btn-primary" />
+                    @Html.ActionLink("Anuluj i wróć do listy", "Index", null, new
+                    {
+                        @class = "btn btn-default"
+                    })
+                </div>
+            }
+        </div>
+        <div class="col-md-6">
+            
+        </div>
+    </div>
+</div>
+<br/>
+

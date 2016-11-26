@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Content/myStyles.css",
+    "inputFile": "Content/myStyles.less"
+  },
+  {
+    "outputFile": "Content/Admin/LoginPage.css",
+    "inputFile": "Content/Admin/LoginPage.less"
+  }
+]

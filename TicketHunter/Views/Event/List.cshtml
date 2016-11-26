@@ -1,0 +1,10 @@
+﻿@model TicketHunter.Models.EventsViewModel
+
+@{
+    ViewBag.Title = "Ticket Hunter";
+}
+
+@foreach (var e in Model.Events.Where(x => x.Published))
+{
+    @Html.Partial("EventSummary", e)
+}

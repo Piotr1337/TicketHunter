@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketHunter.WebUI", "TicketHunter\TicketHunter.WebUI.csproj", "{D1CF217A-A5C6-4B49-BE04-218C422C28AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketHunter.Domain", "TicketHunter.Domain\TicketHunter.Domain.csproj", "{3814F0C5-1782-4E86-80D2-51BDDBDA9DB5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1CF217A-A5C6-4B49-BE04-218C422C28AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1CF217A-A5C6-4B49-BE04-218C422C28AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1CF217A-A5C6-4B49-BE04-218C422C28AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1CF217A-A5C6-4B49-BE04-218C422C28AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3814F0C5-1782-4E86-80D2-51BDDBDA9DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3814F0C5-1782-4E86-80D2-51BDDBDA9DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3814F0C5-1782-4E86-80D2-51BDDBDA9DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3814F0C5-1782-4E86-80D2-51BDDBDA9DB5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

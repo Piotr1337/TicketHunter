@@ -1,0 +1,43 @@
+﻿@model TicketHunter.Models.AuthModelView
+
+@{
+    Layout = "~/Views/Admin/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TicketHunter panel administracyjny</title>
+    <link href="~/Content/Admin/LoginPage.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div>
+            <p class="bg-danger">@Html.ValidationMessage("")</p>
+        </div>
+    }
+</div>
+<div class="jumbotron">
+    <div class="container">
+        <img src="~/Content/img/tickets.png">
+        <h2>Ticket Hunter</h2>
+        <div class="box">
+            @using (Html.BeginForm("AdminLogin", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.ReturnUrl)
+                @Html.ValidationMessageFor(m => m.LoginModel.Email)
+                @Html.TextBoxFor(x => x.LoginModel.Email, new {placeholder = "login", autocomplete = "off"})
+                @Html.ValidationMessageFor(m => m.LoginModel.Password)
+                @Html.TextBoxFor(x => x.LoginModel.Password, new {placeholder = "hasło", autocomplete = "new-password", type = "password"})
+                <button class="btn btn-default full-width"><span class="fa fa-sign-in"></span></button>
+            }
+        </div>
+    </div>
+</div>
+</body>
+</html>

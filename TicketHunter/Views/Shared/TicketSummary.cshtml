@@ -1,0 +1,68 @@
+﻿@model TicketHunter.Domain.Entities.Events
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-12">
+        <div class="agenda">
+            <div class="table-responsive">
+                <table class="table table-condensed table-bordered">
+                    <thead>
+                        <tr class="headers">
+                            <th><i class="glyphicon glyphicon-calendar text-muted"></i> Data</th>
+                            <th><i class="glyphicon glyphicon-time text-muted"></i> Godzina</th>
+                            <th><i class="glyphicon glyphicon-tag text-muted"></i> Tytuł</th>
+                            <th><i class="glyphicon glyphicon-map-marker text-muted"></i> Miejsce</th>
+                            <th><i class="fa fa-money"></i> Cena</th>
+                            @if (ViewBag.IsAdmin == true)
+                            {
+                              <th>Akcje</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tickets in Model.Ticket.Where(x => x.EventID == Model.EventID))
+                        {
+                            <tr class="ticketTable">
+                                <td class="agenda-date" rowspan="1">
+                                    <div class="dayofmonth">@tickets.DateOfEvent.Day</div>
+                                    <div class="dayofweek">@tickets.DateOfEvent.ToString("dddd")</div>
+                                    <div class="shortdate text-muted">@tickets.DateOfEvent.ToString("MMMM"), @tickets.DateOfEvent.Year</div>
+                                </td>
+                                <td class="agenda-time">                                   
+                                    @tickets.DateOfEvent.TimeOfDay
+                                </td>
+                                <td class="agenda-events">
+                                    <div class="agenda-event">
+                                        @tickets.Title
+                                    </div>
+                                </td>
+                                <td class="agenda-places">
+                                    <div class="agenda-place">                                      
+                                        @tickets.Location
+                                    </div>
+                                </td>
+                                <td class="agenda-prices">
+                                    <div class="agenda-price">
+                                        @tickets.Price PLN
+                                    </div>
+                                </td>
+                                @if (ViewBag.IsAdmin == true)
+                                {
+                                    <td class="agenda-actions">
+                                        <div class="agenda-action">
+                                            <div class="btn-group pull-right" role="group" aria-label="...">
+                                                @Html.ActionLink("Usuń","DeleteTicket","Admin",new {ticketId = tickets.TicketID}, new {@class = "btn btn-danger", type="button"})
+                                                @Html.ActionLink("Edytuj", "TicketEdit", "Admin", new { ticketId = tickets.TicketID }, new { @class = "btn btn-primary", type = "button" })
+                                            </div>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

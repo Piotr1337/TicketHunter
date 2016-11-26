@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" charset="UTF8"/>
+    @Styles.Render("~/Content/sweetalert")
+    @Styles.Render("~/Content/styles")
+    @Styles.Render("~/Content/stylesForAdmin")
+    @Styles.Render("~/Content/fullcalendar")
+    @Styles.Render("~/Content/datetimepicker")
+    @Styles.Render("~/Content/sweetalert")
+    @Styles.Render("~/Content/summernote")
+    @Styles.Render("~/Content/chosen")
+    @Styles.Render("~/Content/switch")
+    <script src="http://code.jquery.com/jquery-latest.min.js"
+            type="text/javascript"></script>
+    <script src="~/Scripts/Admin/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/Admin/bootstrap-datetimepicker.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+</head>
+<body>
+<div>
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-success">@TempData["message"]</div>
+    }
+    @RenderBody()
+</div>
+    @Scripts.Render("~/scripts/fullCalendar")
+    @Scripts.Render("~/scripts/sweetAlert")
+    @Scripts.Render("~/scripts/summernote")
+    @Scripts.Render("~/Scripts/blazy")
+    @Scripts.Render("~/scripts/adminScripts")
+    @Scripts.Render("~/scripts/chosen")
+    @Scripts.Render("~/scripts/timers")
+    @Scripts.Render("~/scripts/switch")
+<script type="text/javascript">
+    $(function() {
+        $("#EventCategoryID").change(function() {
+            var val = $(this).val();
+            var subItems = "";
+            $.getJSON("@Url.Action("GetSubcategory", "Admin")", { id: val }, function(data) {
+                $.each(data, function(index, item) {
+                    subItems += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                });
+                $("#EventSubCategoryID").html(subItems);
+            });
+        });
+    })
+</script>
+</body>
+</html>

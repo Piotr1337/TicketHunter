@@ -1,0 +1,109 @@
+﻿@model TicketReservation.Models.AdminViewModel
+
+@{
+    Layout = "~/Views/Admin/Shared/_AdminLayout.cshtml";
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h2>Edycja @Model.EventName</h2>
+    </div>
+</div>
+
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    <div class="col-md-4">
+        <div class="panel-body">
+            @Html.HiddenFor(x => x.EventID)
+            <div class="form-group">
+                @Html.LabelFor(m => m.EventName)
+                @Html.TextBoxFor(m => m.EventName, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.EventName)
+                <br/>
+                @Html.LabelFor(m => m.OtherDetails)
+                @Html.TextAreaFor(m => m.OtherDetails, new {@class = "form-control", rows = 5})
+                @Html.ValidationMessageFor(m => m.OtherDetails)
+                <br/>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.EventStartDateTime)
+                        @Html.TextBoxFor(m => m.EventStartDateTime, null, new {@class = "form-control datetimepicker1"})
+                        @Html.ValidationMessageFor(m => m.EventStartDateTime)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.EventEndDateTime)
+                        @Html.TextBoxFor(m => m.EventEndDateTime, null, new {@class = "form-control datetimepicker2"})
+                        @Html.ValidationMessageFor(m => m.EventEndDateTime)
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(m => m.PublicationDate)
+                        @Html.TextBoxFor(m => m.PublicationDate, null, new { @class = "form-control datetimepicker3" })
+                        @Html.ValidationMessageFor(m => m.PublicationDate)
+                    </div>
+                </div>
+                <br/>
+                @Html.LabelFor(m => m.EventCategoryID)
+                @Html.DropDownListFor(m => m.EventCategoryID, new SelectList(Model.CategoriesForDropList, "Value", "Text"), new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.EventCategoryID)
+                <br/>
+                @Html.LabelFor(m => m.EventSubCategoryID)
+                @Html.DropDownListFor(m => m.EventSubCategoryID, new SelectList(Model.SubCategoryForDropList, "Value", "Text"), new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.EventSubCategoryID)
+                <br/>
+                <div style="position: relative;">
+                    <label>Plakat</label>
+                    <a class='btn' href='javascript:;'>
+                        Wybierz plik...
+                        <input type="file" name="Image" size="40"
+                               style="position: absolute; z-index: 2; top: 0;
+                               left: 0; filter: alpha(opacity=0); opacity: 0;
+                               background-color: transparent; color: transparent;"
+                               onchange='$("#upload-file-info").html($(this).val());'>
+                    </a>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
+                @if (Model.ImageData == null)
+                {
+                    <div class="form-control-static">Brak plakatu</div>
+                }
+                else
+                {
+                    <img class="img-responsive center-block"
+                         src="@Url.Action("GetImage", "Event", new {Model.EventID})"/>
+                }
+            </div>
+        </div>
+    </div>
+    if (Model.ShowCalendar)
+    {
+        <div class="col-md-8">
+        @Html.Label("Bilety")
+        <div id='calendar' style="width: 100%">
+
+            </div>
+        </div>
+    }
+    <div class="panel-footer col-md-12">
+        <input type="submit" value="Zapisz" class="btn btn-primary"/>
+        @Html.ActionLink("Anuluj i wróć do listy", "Index", null, new
+        {
+            @class = "btn btn-default"
+        })
+    </div>
+}
+    <!-- Modal -->
+    <div class="modal fade" id="ticketModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                @if (Model.EventID != 0)
+                {
+                    @Html.Action("AddTicketPartialView", "Admin", new { id = Model.EventID })
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+
+

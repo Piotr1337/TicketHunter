@@ -1,0 +1,56 @@
+﻿@model TicketHunter.Models.TicketViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel">Dodaj lub edytuj bilet</h4>
+</div>
+@using (Html.BeginForm("TicketEdit", "Admin", FormMethod.Post, new { id = "span" }))
+{
+    <div class="modal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.HiddenFor(m => m.TicketID)
+                    @Html.HiddenFor(m => m.EventID)
+
+                    @Html.LabelFor(m => m.Title)
+                    @Html.TextBoxFor(m => m.Title, null, new {@class = "form-control", id = "Title"})
+                    @Html.ValidationMessageFor(m => m.Title)
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.LabelFor(m => m.DateOfEvent)
+                            @Html.TextBoxFor(m => m.DateOfEvent, null, new {@class = "form-control date", id = "DateOfEvent", @readonly = "readonly"})
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(m => m.TimeOfEvent)
+                            @Html.TextBoxFor(m => m.TimeOfEvent, null, new {@class = "form-control date", id = "TimeOfEvent"})
+                        </div>
+                    </div>
+                    <br/>
+                    @Html.LabelFor(m => m.Location)
+                    @Html.TextBoxFor(m => m.Location, null, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.Location)
+                    <br/>
+                    @Html.LabelFor(m => m.ArtistID)
+                    @Html.DropDownListFor(m => m.ArtistID, Model.ArtistList, new {@class = "form-control chosen", multiple = "", id= "artistChosen" })
+                    <br/>
+                    <br/>
+                    @Html.LabelFor(m => m.Price)
+                    @Html.TextBoxFor(m => m.Price, null, new {@class = "form-control"})
+                    @Html.ValidationMessageFor(m => m.Price)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+        <button class="btn btn-primary saveTicket" type="submit">Zapisz bilet</button>
+    </div>
+}
+    
+
+
+
+
+

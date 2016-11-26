@@ -1,0 +1,72 @@
+﻿@model TicketHunter.Models.UserDetailsViewModel
+
+
+<div class="row pt50">
+    <div class="col-md-6">
+        <button class="btn btn-default btn-lg mb15" type="button" id="addAddressBtn"><i class="fa fa-plus" aria-hidden="true"></i> Dodaj nowy adres</button>
+
+    </div>
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Ulica</th>
+                    <th>Numer domu</th>
+                    <th>Numer mieszkania</th>
+                    <th>Miasto</th>
+                    <th>Kod pocztowy</th>
+                    <th>Państwo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var user in Model.UserAddressModel.UserAddresses)
+            {
+                <tr id="@user.UserAddressID">
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Street</td>
+                    <td>@user.HouseNumber</td>
+                    <td>@user.FlatNumber</td>
+                    <td>@user.City</td>
+                    <td>@user.PostCode</td>
+                    <td>@user.Country</td>
+                    <td><i class="fa fa-times removeAddress" aria-hidden="true"></i></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModal-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addressModal-label">Dodaj adres dostawy</h4>
+            </div>
+            @using (Html.BeginForm("SaveFilledUserAddress", "Account", FormMethod.Post))
+            {
+                <div class="modal-body">
+                    @Html.HiddenFor(m => m.UserAddressModel.Id)
+                    @Html.HiddenFor(m => m.UserAddressModel.UserAddressID)
+                    @Html.TextBoxFor(m => m.UserAddressModel.FirstName, new {@class = "form-control mt15", placeholder = "Imię"})
+                    @Html.TextBoxFor(m => m.UserAddressModel.LastName, new {@class = "form-control mt15", placeholder = "Nazwisko"})
+                    @Html.TextBoxFor(m => m.UserAddressModel.Street, new {@class = "form-control mt15", placeholder = "Ulica"})
+                    @Html.TextBoxFor(m => m.UserAddressModel.HouseNumber, new {@class = "form-control mt15", placeholder = "Numer domu"})
+                    @Html.TextBoxFor(m => m.UserAddressModel.FlatNumber, new {@class = "form-control mt15", placeholder = "Numer mieszkania"})
+                    @Html.TextBoxFor(m => m.UserAddressModel.City, new {@class = "form-control mt15", placeholder = "Miasto"})
+                    @Html.TextBoxFor(m => m.UserAddressModel.PostCode, new {@class = "form-control mt15", placeholder = "Kod pocztowy"})
+                    @Html.DropDownListFor(m => m.UserAddressModel.Country, Model.UserAddressModel.CountiresDropDown, new { @class = "form-control chosen countryChosen", multiple = "" })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default mt40" id="back" data-dismiss="modal"><i class="fa fa-angle-left" aria-hidden="true"></i> Wróć</button>
+                    <button class="btn btn-info mt40" id="saveAddress" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Zapisz</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

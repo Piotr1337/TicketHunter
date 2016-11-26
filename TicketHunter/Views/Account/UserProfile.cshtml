@@ -1,0 +1,30 @@
+﻿@model TicketHunter.Models.UserDetailsViewModel
+
+@{
+    ViewBag.Title = "Profil użytkownika";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h2 class="pb20 bb1">Profil użytkownika @ViewBag.FirstName @ViewBag.LastName</h2>
+
+        <ul class="nav nav-pills nav-justified" id="userTabs">
+            <li role="presentation" class="active"><a href="#userTickes">Moje bilety</a></li>
+            <li role="presentation"><a href="#userData">Moje dane</a></li>
+            <li role="presentation"><a href="#userAdres">Adresy dostawy</a></li>
+            <li role="presentation"><a href="#userInvoice">Dane do faktury</a></li>
+            <li role="presentation"><a href="#deactivateAccount">Dezaktywacja konta</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="userTickes">
+                <h3 class="pt50">Brak zakupionych biletów</h3>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="userData">@Html.Partial("UserDataSummary", Model)</div>
+            <div role="tabpanel" class="tab-pane" id="userAdres">@Html.Partial("UserAddressSummary", Model)</div>
+            <div role="tabpanel" class="tab-pane" id="userInvoice">.4..</div>
+            <div role="tabpanel" class="tab-pane" id="deactivateAccount">.5..</div>
+        </div>
+    </div>
+</div>

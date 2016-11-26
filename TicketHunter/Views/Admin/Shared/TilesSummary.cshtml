@@ -1,0 +1,160 @@
+﻿@model TicketHunter.Models.Admin.IndexAdminViewModel
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-md-2">
+                    <div class="thumbnail tile tile-medium tile-blue">
+                        <a href="@Url.Action("Create", "Admin")" class="fa fa-links">
+                            <h3 class="tile-text">Dodaj wydarzenie</h3>
+                            <i class="fa fa-3x fa-calendar-plus-o"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-2">
+                    <div class="thumbnail tile tile-medium tile-blue">
+                        <a href="@Url.Action("AddArtist", "Admin")" class="fa fa-links">
+                            <h3 class="tile-text">Dodaj artyste/zespół</h3>
+                            <i class="fa fa-3x fa-user-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-2">
+                    <div class="thumbnail tile tile-medium tile-blue" id="showAllEvents">
+                        <a class="fa fa-links">
+                            <h3 class="tile-text">Wszystkie wydarzenia</h3>
+                            <i class="fa fa-3x fa-table"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-2">
+                    <div class="thumbnail tile tile-medium tile-blue" id="showAllArtists">
+                        <a class="fa fa-links">
+                            <h3 class="tile-text">Wszyscy artyści</h3>
+                            <i class="fa fa-3x fa-users"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-2">
+                    <div class="thumbnail tile tile-medium tile-blue" id="showAllBands">
+                        <a class="fa fa-links">
+                            <h3 class="tile-text">Wszystkie zespoły</h3>
+                            <i class="fa fa-3x fa-star"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-2">
+                    <div class="thumbnail tile tile-medium tile-blue">
+                        <a class="fa fa-links">
+                            <h3 class="tile-text">Kreator sal</h3>
+                            <br />
+                            <i class="fa fa-3x fa-braille"></i>
+                        </a>
+                    </div>
+                </div>
+                @*<div class="col-sm-6 col-md-2">
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    using (Html.BeginForm("LogOff", "Admin", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="thumbnail tile tile-medium tile-blue">
+                            <a href="javascript:document.getElementById('logoutForm').submit()" class="fa fa-links">
+                                <h3 class="tile-text">Wyloguj się</h3>
+                                <i class="fa fa-3x fa-sign-out"></i>
+                            </a>
+                        </div>
+                    }
+                }
+            </div>*@
+            </div>
+        </div>
+    </div>
+    <div class="panel-body" id="allEventsAdmin" style="display: none;">
+        <table class="table table-striped table-condensed table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Nazwa</th>
+                <th class="NumericCol">Data rozpoczęcia imprezy</th>
+                <th>Data zakończenia imprezy</th>
+                <th>Akcje</th>
+            </tr>
+            @foreach (var item in Model.IndexEvents)
+            {
+                <tr data-rowid="@item.EventID">
+                    <td>@item.EventID</td>
+                    <td>@Html.ActionLink(item.EventName, "Edit", new { eventId = item.EventID })</td>
+                    <td>@item.EventStartDateTime.Value.ToShortDateString()</td>
+                    <td>@item.EventEndDateTime.Value.ToShortDateString()</td>
+                    <td>
+                        <button class="btn btn-default" type="button" data-eventid="@item.EventID" id="deleteEvent">Usuń</button>
+                        @Html.ActionLink("Edytuj", "Edit", new { eventId = item.EventID }, new { @class = "btn btn-default", id = "editEvent", @role = "button" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="panel-body" id="allArtistsAdmin" style="display: none;">
+        <table class="table table-striped table-condensed table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Pseudonim artystyczny</th>
+                <th>Imie i nazwisko</th>
+                <th>Kategoria</th>
+                <th>Akcje</th>
+            </tr>
+            @foreach (var item in Model.IndexArtists.Where(x => !x.IsBand))
+            {
+                <tr data-rowid="@item.ArtistID">
+                    <td>@item.ArtistID</td>
+                    <td>@Html.ActionLink(item.Nickname, "ArtistEdit", new { artistId = item.ArtistID })</td>
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>@Html.Action("GetCategory", "Admin", new { CategoryId = item.CategoryID })</td>
+                    <td>
+                        <button class="btn btn-default" type="button" data-artistid="@item.ArtistID" id="deleteArtist">Usuń</button>
+                        @Html.ActionLink("Edytuj", "ArtistEdit", new { eventId = item.ArtistID }, new { @class = "btn btn-default", id = "editEvent", @role = "button" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="panel-body" id="allBandsAdmin" style="display: none;">
+        <table class="table table-striped table-condensed table-bordered">
+            <tr>
+                <th>ID</th>
+                <th>Nazwa zespołu</th>
+                <th>Kategoria zespołu</th>
+                <th>Akcje</th>
+            </tr>
+            @foreach (var item in Model.IndexArtists.Where(x => x.IsBand))
+            {
+                <tr data-rowid="@item.ArtistID">
+                    <td>@item.ArtistID</td>
+                    <td>@Html.ActionLink(item.BandName, "ArtistEdit", new { artistId = item.ArtistID })</td>
+                    <td>@Html.Action("GetCategory", "Admin", new { CategoryId = item.CategoryID })</td>
+                    <td>
+                        <button class="btn btn-default" type="button" data-eventid="@item.ArtistID" id="deleteEvent">Usuń</button>
+                        @Html.ActionLink("Edytuj", "ArtistEdit", new { eventId = item.ArtistID }, new { @class = "btn btn-default", id = "editEvent", @role = "button" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="panel-footer">
+        <div class="container">
+            <div class="row">
+                @*<div class="hidden-xs hidden-sm col-md-5">
+                    <h3 align="right">Ticket</h3>
+                </div>
+                <div class="col-xs-3 col-md-1">
+                    <img src="../../Content/img/tickets.png">
+                </div>
+                <div class="hidden-xs hidden-sm col-md-5">
+                    <h3 align="left">Hunter</h3>
+                </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNet.Identity
+@model TicketHunter.Models.UserDetailsViewModel
+
+<div class="row pt50">
+    <div class="col-md-6 displayNone" id="userDataEdit">
+        @using (Html.BeginForm("SaveFilledUserData","Account", FormMethod.Post))
+        {
+        @Html.HiddenFor(m => m.UserDataModel.Id)
+        @Html.HiddenFor(m => m.UserDataModel.UserProfileDetailsID)
+        @Html.TextBoxFor(m => m.UserDataModel.FirstName, new {@class = "form-control mt15", placeholder = "Imię"})
+        @Html.ValidationMessageFor(m => m.UserDataModel.FirstName)
+        @Html.TextBoxFor(m => m.UserDataModel.LastName, new {@class = "form-control mt15", placeholder = "Nazwisko"})
+        @Html.ValidationMessageFor(m => m.UserDataModel.LastName)
+        @Html.TextBoxFor(m => m.UserDataModel.TelephoneNumber, new {@class = "form-control mt15", placeholder = "Numer telefonu"})
+        @Html.ValidationMessageFor(m => m.UserDataModel.TelephoneNumber)
+            <div class="row">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-default btn-lg mt40" id="back"><i class="fa fa-angle-left" aria-hidden="true"></i> Wróć</button>
+                    <button class="btn btn-info btn-lg mt40" id="saveUserData" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Zapisz</button>
+                </div>
+            </div>
+        }
+    </div>
+    @if (string.IsNullOrEmpty(Model.UserDataModel.FirstName))
+    {
+        <div class="col-md-6" id="userDataDisplay">
+            <span class="userDataText">
+                    <strong>Imię:</strong>
+                    <span>-</span>
+                </span>
+            <span class="userDataText">
+                    <strong>Nazwisko:</strong>
+                    <span>-</span>
+                </span>
+            <span class="userDataText">
+                    <strong>Email:</strong>
+                    <span>@User.Identity.Name</span>
+                </span>
+            <span class="userDataText">
+                    <strong>Numer telefonu:</strong>
+                    <span>-</span>
+                </span>
+
+            <button class="btn btn-default btn-lg mt40" id="fillData"><i class="fa fa-pencil" aria-hidden="true"></i> Uzupełnij dane</button>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-6" id="fullUserDataDisplay">
+            <span class="userDataText">
+                    <strong>Imię:</strong>
+                    <span>@Model.UserDataModel.FirstName</span>
+                </span>
+            <span class="userDataText">
+                    <strong>Nazwisko:</strong>
+                    <span>@Model.UserDataModel.LastName</span>
+                </span>
+            <span class="userDataText">
+                    <strong>Email:</strong>
+                    <span>@User.Identity.Name</span>
+                </span>
+            <span class="userDataText">
+                    <strong>Numer telefonu:</strong>
+                    <span>@Model.UserDataModel.TelephoneNumber</span>
+                </span>
+
+            <button class="btn btn-default btn-lg mt40" id="editData"><i class="fa fa-pencil" aria-hidden="true"></i> Edytuj</button>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,68 @@
+﻿.fc-event {
+  cursor: pointer;
+}
+#deleteEvent:hover {
+  border-color: red;
+  color: red;
+  background-color: white;
+}
+#editEvent:hover {
+  border-color: #337ab7;
+  background-color: white;
+}
+#editEvent a:link {
+  color: #337ab7;
+}
+#editInPop {
+  cursor: pointer;
+  padding-right: 20px;
+}
+#cancelInPop {
+  cursor: pointer;
+}
+#customBgPop {
+  color: white;
+}
+
+.adminLogo {
+    height: 50px;
+    margin-top: -15px;
+}
+
+.navbar-inverse {
+    margin-bottom: 0;
+}
+
+.b-lazy {
+        -webkit-transition: opacity 500ms ease-in-out;
+           -moz-transition: opacity 500ms ease-in-out;
+             -o-transition: opacity 500ms ease-in-out;
+                transition: opacity 500ms ease-in-out;
+                 max-width: 100%;
+                   opacity: 0;
+    }
+    .b-lazy.b-loaded {
+                   opacity: 1;
+    }
+
+.loading {
+    background: #F4F4F4 url('../Content/img/2.gif') center center no-repeat;
+    height: 279.85px;
+}
+
+.pr10 {
+    padding-right: 10px;
+}
+
+.publicationBtn {
+    margin-top: 25px;
+}
+
+.content > .customPanel {
+    display:none;
+}
+
+.content > .customPanel:target{
+    display:block;
+}
+
