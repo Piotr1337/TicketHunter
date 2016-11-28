@@ -16,7 +16,7 @@ using TicketHunter.Infrastructure;
 using TicketHunter.Models;
 using TicketHunter.Models.Admin;
 using TicketReservation.Models;
-
+using System.Timers;
 
 namespace TicketHunter.Controllers.AdminController
 {
@@ -89,7 +89,7 @@ namespace TicketHunter.Controllers.AdminController
                     {
                         case SignInStatus.Success:
                             //return RedirectToLocal(model.ReturnUrl);
-                            return RedirectToAction("Index", "Admin");
+                            return Redirect(Url.Action("Index", "Admin") + "#tile");
                         case SignInStatus.LockedOut:
                             return View("Lockout");
                         case SignInStatus.RequiresVerification:
@@ -369,5 +369,7 @@ namespace TicketHunter.Controllers.AdminController
             var theArtist = _artistRepository.GetArtists(artistId);
             return theArtist != null ? File(theArtist.ImageData, theArtist.ImageMimeType) : null;
         }
+
+       
     }
 }

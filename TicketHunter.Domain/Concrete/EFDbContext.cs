@@ -10,6 +10,7 @@ namespace TicketHunter.Domain.Entities
         public EFDbContext()
             : base("name=EFDbContext")
         {
+
         }
 
         public virtual DbSet<Artists> Artists { get; set; }

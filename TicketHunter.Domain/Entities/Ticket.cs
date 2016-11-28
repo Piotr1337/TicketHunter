@@ -1,11 +1,13 @@
 namespace TicketHunter.Domain.Entities
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [JsonObject(IsReference = true)]
     [Table("Ticket")]
     public partial class Ticket
     {
@@ -27,6 +29,11 @@ namespace TicketHunter.Domain.Entities
 
         public int ArtistID { get; set; }
 
+        public string PublicKey { get; set; }
+
+        public string EventKey { get; set; }
+
+        [JsonIgnore]
         public virtual Events Events { get; set; }
     }
 }

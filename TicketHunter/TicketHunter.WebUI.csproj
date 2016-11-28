@@ -48,6 +48,14 @@
       <HintPath>..\packages\AutoMapper.5.1.1\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
@@ -103,6 +111,10 @@
     </Reference>
     <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Quartz, Version=2.4.1.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.4.1\lib\net40\Quartz.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SendGrid.CSharp.HTTP.Client, Version=3.0.0.0, Culture=neutral, PublicKeyToken=79219bf4e5ecaaca, processorArchitecture=MSIL">
@@ -243,6 +255,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController\AdminController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -253,6 +266,8 @@
     <Compile Include="Infrastructure\EmailService.cs" />
     <Compile Include="Infrastructure\FacebookBackChannelHandler.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Infrastructure\PublicationJob.cs" />
+    <Compile Include="Infrastructure\PublicationScheduler.cs" />
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
     <Compile Include="Mappings\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDomainMappingProfile.cs" />
@@ -266,6 +281,7 @@
     <Compile Include="Models\Admin\IndexAdminViewModel.cs" />
     <Compile Include="Models\ArtistViewModel.cs" />
     <Compile Include="Models\AuthModelView.cs" />
+    <Compile Include="Models\ChartViewModel.cs" />
     <Compile Include="Models\EventsViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -290,6 +306,12 @@
       <DependentUpon>LoginPage.css</DependentUpon>
     </Content>
     <Content Include="Content\Admin\simple-sidebar.css" />
+    <Content Include="Content\chart.css">
+      <DependentUpon>chart.less</DependentUpon>
+    </Content>
+    <Content Include="Content\chart.min.css">
+      <DependentUpon>chart.css</DependentUpon>
+    </Content>
     <Content Include="Content\easy-autocomplete.min.css" />
     <Content Include="Content\easy-autocomplete.themes.min.css" />
     <Content Include="Content\ErrorStyles.css" />
@@ -332,6 +354,7 @@
     <Content Include="Scripts\Admin\moment-with-locales.min.js" />
     <Content Include="Scripts\Admin\moment.js" />
     <Content Include="Scripts\Admin\myCalendar.js" />
+    <Content Include="Scripts\Admin\myChart.js" />
     <Content Include="Scripts\Admin\myMultiSelect.js" />
     <Content Include="Scripts\Admin\myScriptsAdmin.js" />
     <Content Include="Scripts\Admin\summernote-pl-PL.min.js" />
@@ -367,6 +390,10 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <Content Include="Content\Admin\LoginPage.less" />
+    <Content Include="Content\chart.less" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -441,6 +468,7 @@
     <Content Include="Views\Admin\AdminLogin.cshtml" />
     <Content Include="Views\Admin\Shared\TilesSummary.cshtml" />
     <Content Include="Views\Admin\Shared\PublicationsSummary.cshtml" />
+    <Content Include="Views\Chart\Chart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

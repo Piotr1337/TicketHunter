@@ -89,6 +89,8 @@
     height: 65px;
     font-size: 18px;
     line-height: 60px;
+    border-bottom: 0.01em solid #6f6f6f;
+    border-top: 0.01em solid #6f6f6f;
 }
 
 .sidebar-nav > .sidebar-brand a {

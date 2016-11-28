@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TicketHunter.Domain.Abstract;
 using TicketHunter.Domain.Entities;
 
@@ -41,6 +42,12 @@ namespace TicketHunter.Domain.Concrete
                 context.Ticket.Remove(dbEntry);
                 context.SaveChanges();
             }
+            return dbEntry;
+        }
+
+        public Ticket GetTicket(int ticketId)
+        {
+            Ticket dbEntry = context.Ticket.Find(ticketId);
             return dbEntry;
         }
     }

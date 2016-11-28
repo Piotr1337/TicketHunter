@@ -31,3 +31,5 @@ C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter.Domain\bin\Debug\Lucene.Net.dll
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter.Domain\bin\Debug\Lucene.Net.pdb
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter.Domain\bin\Debug\Lucene.Net.xml
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter.Domain\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter.Domain\bin\Debug\Newtonsoft.Json.xml

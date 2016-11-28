@@ -66,3 +66,7 @@
     display:block;
 }
 
+.adminPanelLi{
+    color: #fff;
+    cursor: default;
+}

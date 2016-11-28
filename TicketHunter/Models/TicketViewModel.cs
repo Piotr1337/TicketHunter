@@ -31,6 +31,10 @@ namespace TicketHunter.Models
 
         [DisplayName("Tytuł")]
         public string Title { get; set; }
+        [DisplayName("Klucz sali")]
+        public string PublicKey { get; set; }
+        [DisplayName("Klucz wydarzenia")]
+        public string EventKey { get; set; }
 
         public IEnumerable<SelectListItem> ArtistList { get; set; }
 

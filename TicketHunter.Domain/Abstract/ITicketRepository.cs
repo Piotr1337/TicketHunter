@@ -14,5 +14,7 @@ namespace TicketHunter.Domain.Abstract
         void SaveTicket(Ticket theTicket);
 
         Ticket DeleteTicket(int ticketId);
+
+        Ticket GetTicket(int ticketId);
     }
 }

@@ -170,4 +170,17 @@ $('body').on('click', '.removeAddress', function () {
 
 $('body').on('click', '.faceLogin', function () {
     $('#fbForm').submit();
-})
+});
+
+$('body').on('click', '.ticketTable', function () {
+    ticketId = $(this).attr("data-ticket-id");
+    console.log(ticketId);
+    window.location.href = "/Chart/Chart?ticketId=" + ticketId
+    //$.ajax({
+    //    type: "POST",
+    //    url: "/Chart/Chart",
+    //    data: {
+    //        ticketId: ticketId
+    //    },
+    //});
+});

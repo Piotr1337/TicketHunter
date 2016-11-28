@@ -22,7 +22,7 @@
                     <tbody>
                         @foreach (var tickets in Model.Ticket.Where(x => x.EventID == Model.EventID))
                         {
-                            <tr class="ticketTable">
+                            <tr class="ticketTable" data-ticket-id="@tickets.TicketID">
                                 <td class="agenda-date" rowspan="1">
                                     <div class="dayofmonth">@tickets.DateOfEvent.Day</div>
                                     <div class="dayofweek">@tickets.DateOfEvent.ToString("dddd")</div>

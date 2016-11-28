@@ -20,6 +20,7 @@ namespace TicketHunter
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfiguration.Configure();
+            //PublicationScheduler.Start();
 
         }
     }

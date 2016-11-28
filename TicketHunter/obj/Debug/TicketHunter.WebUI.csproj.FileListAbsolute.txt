@@ -102,3 +102,12 @@ C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Lucene.Net.dll
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Lucene.Net.pdb
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Lucene.Net.xml
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Common.Logging.Core.dll
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Common.Logging.dll
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Quartz.dll
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Common.Logging.pdb
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Common.Logging.xml
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Common.Logging.Core.pdb
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Common.Logging.Core.xml
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Quartz.pdb
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Quartz.xml
