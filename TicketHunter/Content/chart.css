@@ -1,6 +1,6 @@
 ﻿#chart {
   margin-top: -20px;
-  height: 1100px;
+  height: 1000px;
 }
 .fs50 {
   font-size: 30px;
@@ -17,4 +17,12 @@
 }
 .flR {
   float: right;
+}
+.reservationFonts {
+  font-weight: 600;
+  font-size: 20px;
+  padding-bottom: 8px;
+}
+.reservationContent {
+  max-width: 400px;
 }

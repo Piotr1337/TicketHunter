@@ -22,15 +22,33 @@ $(document).ready(function () {
                     'STAGE': 'Scena',
                     'ORGAN': 'Orgue'
                 },
+                language: 'pl',
+                showLegend: true,
                 tooltipText: function (object) {
                     if (object.status !== 'free') {
-                        return 'not free, sorry!';
+                        return 'Miejsce zajęte!';
                     } else {
                         return 'yep, can select it';
                     }
                 },
                 onChartRendered() {
                     $("#chart").css("border", "1px solid #bababa");
+                    //console.log($('html').find('#chartContainer'))
+                    //$('#chartContainer').bind('wheel mousewheel', function (e) {
+                    //    var delta;
+                    //    alert('dd')
+                    //    if (e.originalEvent.wheelDelta !== undefined)
+                    //        delta = e.originalEvent.wheelDelta;
+                    //    else
+                    //        delta = e.originalEvent.deltaY * -1;
+
+                    //    if (delta > 0) {
+                    //        $("#chartContainer").css("width", "+=10");
+                    //    }
+                    //    else {
+                    //        $("#chartContainer").css("width", "-=10");
+                    //    }
+                    //});
                 },
                 onObjectSelected(object, selectedTicketType) {
                     console.log(object)
@@ -41,30 +59,18 @@ $(document).ready(function () {
                     }).success(function () {
                         var input = "";
                         input += "<div>"
-                        input += "<h3>Sektor:&nbsp;" + object.id + "<h3>"
-                        input += object.label
-                        input += object.status
+                        input += "<strong class='reservationFonts'>Sektor:&nbsp;" + object.id + "</strong>"
                         input += "</div>"
                         console.log(input)
-                        $('.reserveBody').append(input);
+                        $('.reserveBody').prepend(input);
                         $('body').on('click', '.reserveBtn', function () {
-                            $.ajax({
-                                type: "POST",
-                                url: "https://app.seats.io/api/reservationToken/829ec0d2-42b6-481e-86d4-b23b7f8f7691/create",
-                            }).success(function (data) {
-                                var reservationToken = data;
-                                console.log(object.id, ticket.EventKey, ticket.PublicKey, reservationToken)
-                                $.ajax({
-                                    type: "POST",
-                                    url: "https://app.seats.io/api/reserve",
-                                    data: JSON.stringify({
-                                        "objects": [object.id],
-                                        "event": ticket.EventKey,
-                                        "publicKey": ticket.PublicKey,
-                                        "reservationToken": reservationToken
-                                    }),
-                                })
-                            });
+                            var numberOfTIckets = $('.ticketCount :selected').val()
+                            if (numberOfTIckets > 1)
+                            {
+                                multipleReservation(object, ticket, numberOfTIckets)
+                            } else {
+                                singleReservation(object, ticket)
+                            }
                         })
                     });
 
@@ -77,4 +83,40 @@ $(document).ready(function () {
             console.log(thrownError);
         }
     });
+
+    function singleReservation(object, ticket) {
+        $.ajax({
+            type: "POST",
+            url: "https://app.seats.io/api/reservationToken/829ec0d2-42b6-481e-86d4-b23b7f8f7691/create",
+        }).success(function (reservationToken) {
+            $.ajax({
+                type: "POST",
+                url: "https://app.seats.io/api/reserve",
+                data: JSON.stringify({
+                    "objects": [object.id],
+                    "event": ticket.EventKey,
+                    "publicKey": ticket.PublicKey,
+                    "reservationToken": reservationToken
+                }),
+            }).success(function () {
+                $('#reservationInfo').modal('hide');
+            })
+        });
+    }
+
+    function multipleReservation(object, ticket, number) {
+        $.ajax({
+            type: "POST",
+            url: "https://app.seats.io/api/changeStatus",
+            data: JSON.stringify({
+                "bestAvailable": { number: number },
+                "eventKey": ticket.EventKey,
+                'secretKey': '9081cdd9-d70c-43e8-87ba-41ec8778c518',
+                "status": 'reserved'
+            }),
+        }).success(function () {
+            $('#reservationInfo').modal('hide');
+        })
+    }
+   
 });
