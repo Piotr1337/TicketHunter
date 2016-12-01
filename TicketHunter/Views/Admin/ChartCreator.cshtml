@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "ChartCreator";
+    Layout = null;
+}
+
+<h2>ChartCreator</h2>
+
+<div id="chartDesigner"></div>
+
+<script src="http://app.seats.io/chart.js"></script>
+<script>
+    new seatsio.SeatingChartDesigner({
+        divId: "chartDesigner",
+        designerKey: "b3ff3f87-10be-4d80-83cb-c52fc4c89b72",
+        chartKey: ""
+    }).render();
+</script>
+

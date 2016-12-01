@@ -22,5 +22,6 @@ namespace TicketHunter.Domain.Entities
         public string TelephoneNumber { get; set; }
 
         public string Id { get; set; }
+
     }
 }

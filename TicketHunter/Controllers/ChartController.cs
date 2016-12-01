@@ -9,6 +9,7 @@ using TicketHunter.Models;
 
 namespace TicketHunter.Controllers
 {
+    [Authorize]
     public class ChartController : Controller
     {
         ITicketRepository _ticketRepository;
@@ -33,6 +34,20 @@ namespace TicketHunter.Controllers
             string jsonResult = JsonConvert.SerializeObject(ticket, Formatting.Indented);
 
             return Json(jsonResult, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult ReservingInfoSummary(ReserveInfoViewModel vm)
+        {
+            //var model = // do whatever you need to get your model
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult ReservingInfoSummaryPost(ReserveInfoViewModel vm)
+        {
+            //var model = // do whatever you need to get your model
+            return PartialView();
         }
     }
 }

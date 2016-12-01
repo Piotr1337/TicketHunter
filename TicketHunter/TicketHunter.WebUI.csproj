@@ -288,6 +288,7 @@
     <Compile Include="Models\MemberLoginViewModel.cs" />
     <Compile Include="Models\MemberRegisterViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
+    <Compile Include="Models\ReserveInfoViewModel.cs" />
     <Compile Include="Models\TicketViewModel.cs" />
     <Compile Include="Models\UserAddressViewModel.cs" />
     <Compile Include="Models\UserDataViewModel.cs" />
@@ -469,6 +470,8 @@
     <Content Include="Views\Admin\Shared\TilesSummary.cshtml" />
     <Content Include="Views\Admin\Shared\PublicationsSummary.cshtml" />
     <Content Include="Views\Chart\Chart.cshtml" />
+    <Content Include="Views\Admin\ChartCreator.cshtml" />
+    <Content Include="Views\Chart\ReservingInfoSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

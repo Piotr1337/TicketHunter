@@ -400,6 +400,9 @@ a.list-group-item.active small {
 .mt50 {
   margin-top: 50px;
 }
+.mr10 {
+  margin-right: 10px;
+}
 .mt40 {
   margin-top: 40px;
 }
@@ -419,11 +422,17 @@ a.list-group-item.active small {
 .pb8 {
   padding-bottom: 8px;
 }
+.pad10 {
+  padding-right: 10px;
+}
 .fl {
   float: left;
 }
 .pointer {
   cursor: pointer;
+}
+.fff {
+  color: #fff !important;
 }
 .displayNone {
   display: none;

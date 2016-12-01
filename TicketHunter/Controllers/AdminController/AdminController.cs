@@ -182,6 +182,11 @@ namespace TicketHunter.Controllers.AdminController
             }
         }
 
+        public ActionResult ChartCreator()
+        {
+            return View();
+        }
+
         public ViewResult Create()
         {
             return View("Edit", new AdminViewModel()
