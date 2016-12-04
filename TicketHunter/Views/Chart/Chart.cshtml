@@ -20,10 +20,15 @@
     @Html.Hidden("Ticket",(Int32)@ViewBag.TicketId)
     <div class="container-fluid">
         <div class="row">
-            @*<div class="col-md-2">
-                
-            </div>*@
-            <div class="col-md-12">
+            <div class="col-md-2">
+                <div class="categories">
+                    <a href="@Url.Action("List","Event")"><img src="~/Content/img/tickets.png"></a>                   
+                </div>
+                <div class="actions">
+                    <button class="btn btn-primary btn-block btn-lg bestSeats">Najlepsze dostępne miejsca</button>
+                </div>
+            </div>
+            <div class="col-md-10">
                 <p class="alert alert-info fs50 fff">
                 <i class="fa fa-calendar pr" aria-hidden="true"></i>@Model.Ticket.DateOfEvent.ToLongDateString() 
                     <span class="space"><i class="fa fa-map-marker pr" aria-hidden="true"></i>@Model.Ticket.Location </span>

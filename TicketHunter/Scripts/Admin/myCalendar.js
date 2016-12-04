@@ -97,14 +97,14 @@ $(document).ready(function () {
                 });
             },
             eventRender: function (event, element, view) {
-
+                console.log(event.chartKey)
                 //Popover
                 var url = "/Admin/GetImage?artistId=" + event.artistID;
                 var input = "<h6>";
                 input += event.artistName;
                 input += "</h6>";
-                input += "<img width='200' height='100' src=" + url + ">";
-                input += "<p class='bg-info' id='customBgPop' style='padding: 5px;'>";
+                input += '<img src="https://app.seats.io/api/chart/' + event.chartKey + '/thumbnail"/>';
+                input += "<p class='bg-info' id='customBgPop' style='padding: 5px;margin-top: 10px;'>";
                 input += "<span class='glyphicon glyphicon-calendar'></span>";
                 input += "&nbsp; 2016-09-15 (22:00)";
                 input += "</p>";

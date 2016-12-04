@@ -32,6 +32,7 @@ namespace TicketHunter.Domain.Entities
         public string PublicKey { get; set; }
 
         public string EventKey { get; set; }
+        public string ChartKey { get; set; }
 
         [JsonIgnore]
         public virtual Events Events { get; set; }
