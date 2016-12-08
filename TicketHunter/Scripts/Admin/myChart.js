@@ -14,6 +14,9 @@ $(document).ready(function () {
                 publicKey: ticket.PublicKey,
                 event: ticket.EventKey,
                 showRowLines: false,
+                extraConfig: {
+                    arrayCategory: category = []
+                },
                 selectedObjectsInputName: 'chosenTickets',
                 objectColor: function (object, defaultColor, extraConfig) {
                     if (object.selected) {
@@ -44,8 +47,8 @@ $(document).ready(function () {
                     'max-width: 400px; max-height: 200px; font-size: 20px; color: black;background-color: white; border: 2px solid black',   
                 onChartRendered: function (chart) {
                     $("#chart").css("border", "1px solid #bababa");
-                },
-                
+                    console.log(chart)
+                },             
                 onObjectClicked(object, selectedTicketType) {
                     if (object.status === 'free') {
                         var url = $('#reservationInfo').data('url');
@@ -59,7 +62,7 @@ $(document).ready(function () {
                                 input += "<strong class='reservationFonts'>Sektor:&nbsp;</strong><span class='reservationFonts2'>" + object.labels.section + "</span><br/>"
                             }
                             input += "<strong class='reservationFonts'>Rząd:&nbsp;</strong><span class='reservationFonts2'>" + object.labels.parent + "</span><br/>"
-                            input += "<strong class='reservationFonts'>Miejsce:&nbsp;</strong><span class='reservationFonts2'>" + object.labels.own + "</span><br/>"
+                            input += "<strong class='reservationFonts'>Miejsce:&nbsp;</strong><span class='reservationFonts2 seats'>" + object.labels.own + "</span><br/>"
                             input += "<input type='hidden' id='currentObject' name='object' data-uuid=" + object.uuid + " data-label-parent=" + object.labels.parent + " data-label-own=" + object.labels.own + " data-label-category='" + object.category.label + "'/>"
                             input += "</div>"
                             $('.reserveBody').prepend(input);
@@ -69,8 +72,6 @@ $(document).ready(function () {
                                 //    console.log('multiple')
                                 //    multipleReservation(object, ticket, numberOfTIckets)
                                 //} else {
-                                    console.log(numberOfTIckets)
-                                    console.log('single')
                                     singleReservation(object, ticket)
                                 }
                             })
@@ -78,24 +79,33 @@ $(document).ready(function () {
                     }
                 },
                 onObjectSelected(object, selectedTicketType) {
+                    var e = 1
                     $('#reservationInfo').one('shown.bs.modal', function () {
+                        e = 0;
                         //var rowNumber = $('#reserveDetails').find('#currentObject').attr('data-label-parent');
                         //var seatNumber = $('#reserveDetails').find('#currentObject').attr('data-label-own');
                         //var category = $('#reserveDetails').find('#currentObject').attr('data-label-category');
                         //var uuid = $('#reserveDetails').find('#currentObject').attr('data-uuid');
                         $('.ticketCount').on('change', function () {
                             var count = $(this).val();
-                            console.log('drop' + count)
                             var labelObjectArray = [];
                             var result = parseInt(object.labels.own);
-                            for (var i = 0; i < count; i++) {
-                                result += 1;
-                                console.log(result)
-                                labelObjectArray.push([object.labels.parent + '-' + result])
+                            labelObjectArray.push([object.labels.parent + '-' + object.labels.own])
+                            for (var i = 1; i < count; i++) {
+                                if (object.status == 'free') {
+                                    result += 1;
+                                    console.log('OBJECT' + object.status)
+                                    labelObjectArray.push([object.labels.parent + '-' + result])
+                                }
+                                console.log(labelObjectArray)
+                                $('body').find('.seats').append(','+result)
                             }
-                            console.log(labelObjectArray)
                             chart.clearSelection();
-                            chart.selectObjects(labelObjectArray)
+                            if (object.status == 'free') {
+                                chart.selectObjects(labelObjectArray)
+                            } else {
+                                alert('brak wolnych miejsc')
+                            }
                             $('.reserveBtn').on('click', function () {
                                 var labelStringArray = [];
                                 $.each(labelObjectArray, function (index, value) {
@@ -105,17 +115,43 @@ $(document).ready(function () {
                                 })
                                 multipleReservation(labelStringArray, ticket)
                             })
+                            $('#reservationInfo').on('hidden.bs.modal', function () {
+                                chart.clearSelection();
+                                $(this).off('shown.bs.modal');
+                            })
+                            $('.closeRsrv').on('click', function () {
+                                chart.clearSelection();
+                                $(this).off('shown.bs.modal');
+                            })
                             
                         })
                     })
                     console.log(object)
+                },
+                objectCategory: function (object, categories, defaultCategory, extraConfig) {
+                    //extraConfig.arrayCategory.push(categories)
                 }
             }).render();
-            $('#reservationInfo').on('hidden.bs.modal', function () {
-                chart.clearSelection();
-            })
-            $('.closeRsrv').on('click', function () {
-                chart.clearSelection();
+            $('.bestSeats').on('click', function () {
+                var url = $('#reservationInfo').data('url');
+                $.get(url, function (data) {
+                    $('.bestAvaiableContent').html(data);
+                    $('#bestAvaiable').modal('show');
+                }).success(function () {
+                    $('.ticketCount').on('change', function () {
+                        var numberOfTIckets = $('.ticketCount :selected').val()
+                            console.log(numberOfTIckets)
+                            chart.selectBestAvailable({
+                                'number': numberOfTIckets,
+                            });
+                            $('.reserveBtn').on('click', function () {
+                                BestAvaiableSeatReservation(null, ticket, numberOfTIckets)
+                            });
+                    });
+                    $('#bestAvaiable').on('hidden.bs.modal', function () {
+                        chart.clearSelection();
+                    })
+                })
             })
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -123,7 +159,6 @@ $(document).ready(function () {
             console.log(xhr.responseText);
             console.log(thrownError);
         }
-
     });
     function singleReservation(object, ticket) {
         $.ajax({
@@ -140,7 +175,7 @@ $(document).ready(function () {
                     "reservationToken": reservationToken
                 }),
             }).success(function () {
-                $('#reservationInfo').modal('hide');               
+                $('#reservationInfo').modal('hide');
             })
         });
     }
@@ -180,7 +215,7 @@ $(document).ready(function () {
                     "reservationToken": reservationToken
                 }),
             }).success(function () {
-                $('#reservationInfo').modal('hide');
+                $('#bestAvaiable').modal('hide');
             })
         }
     )

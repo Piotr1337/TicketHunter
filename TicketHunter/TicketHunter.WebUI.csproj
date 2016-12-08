@@ -472,6 +472,7 @@
     <Content Include="Views\Chart\Chart.cshtml" />
     <Content Include="Views\Admin\ChartCreator.cshtml" />
     <Content Include="Views\Chart\ReservingInfoSummary.cshtml" />
+    <Content Include="Views\Chart\BestAvaiableSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

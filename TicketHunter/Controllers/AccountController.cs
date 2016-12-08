@@ -91,8 +91,11 @@ namespace TicketHunter.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                    //return RedirectToAction("List", "Event");
+                    if(model.ReturnUrl != null)
+                    {
+                        return RedirectToLocal(model.ReturnUrl);
+                    }
+                    return RedirectToAction("List", "Event");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

@@ -39,14 +39,18 @@ namespace TicketHunter.Controllers
         [HttpGet]
         public ActionResult ReservingInfoSummary(ReserveInfoViewModel vm)
         {
-            //var model = // do whatever you need to get your model
             return PartialView();
         }
 
         [HttpPost]
         public ActionResult ReservingInfoSummaryPost(ReserveInfoViewModel vm)
         {
-            //var model = // do whatever you need to get your model
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult BestAvaiableSummaryPost(ReserveInfoViewModel vm)
+        {
             return PartialView();
         }
     }
