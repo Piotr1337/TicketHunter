@@ -17,6 +17,7 @@ using TicketHunter.Models;
 using TicketHunter.Models.Admin;
 using TicketReservation.Models;
 using System.Timers;
+using TicketHunter.Domain.Scheduler;
 
 namespace TicketHunter.Controllers.AdminController
 {
@@ -126,6 +127,7 @@ namespace TicketHunter.Controllers.AdminController
             {
                 IndexEvents = _repository.Events,
                 IndexArtists = _artistRepository.Artists,
+                IndexTickets = _ticketRepository.Tickets
                 
             };
             return View(model);
@@ -173,6 +175,7 @@ namespace TicketHunter.Controllers.AdminController
                 var toModel = Mapper.Map<AdminViewModel, Events>(viewModel);
                 toModel.Published = false;
                 _repository.SaveEvent(toModel);
+                Scheduler();
                 TempData["message"] = $"Zapisano {theEvent.EventName}";
                 return RedirectToAction("Index");
             }
@@ -376,6 +379,20 @@ namespace TicketHunter.Controllers.AdminController
             return theArtist != null ? File(theArtist.ImageData, theArtist.ImageMimeType) : null;
         }
 
-       
+        public void Scheduler()
+        {
+            PublicationScheduler.Start(_repository.Events);           
+        }
+
+        public ActionResult EventDetailsSummary(int id)
+        {
+            var model = new IndexAdminViewModel()
+            {
+                IndexEvents = _repository.Events,
+                IndexTickets = _ticketRepository.Tickets,
+                Event = _repository.GetEvent(id)
+            };
+            return PartialView("Shared/EventDetailsSummary", model);
+        }
     }
 }

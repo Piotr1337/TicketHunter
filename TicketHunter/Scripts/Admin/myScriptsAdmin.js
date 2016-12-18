@@ -156,3 +156,67 @@ $('body').on('click', '#deleteEvent', function () {
         }
     });
 })
+
+//$('#publicate-countdown').countdown("2017/01/01", function (event) {
+//    $(this).text(
+//      event.strftime('%D days %H:%M:%S')
+//    );
+//});
+
+countdown();
+
+$(".eventDetails").on('click', function () {
+    var id = $(this).data('eventid');
+    $('#eventDetailsModal').modal('show')
+    var url = $("#eventDetailsModal").data('url');
+    console.log(url)
+    console.log(id)
+    $.get(url, { id: id }, function (data) {
+        console.log(data);
+        $('.eventContainer').html(data);
+    })
+})
+
+$("#eventDetailsModal").on("shown.bs.modal", function () {
+    countdown();
+});
+
+$('.eventThumbnail').on('click', function () {
+    var id = $(".eventDetails").data('eventid');
+    $('#eventDetailsModal').modal('show')
+    var url = $("#eventDetailsModal").data('url');
+    console.log(url)
+    console.log(id)
+    $.get(url, { id: id }, function (data) {
+        console.log(data);
+        $('.eventContainer').html(data);
+    })
+})
+
+function countdown() {
+    $('[data-countdown]').each(function () {
+        var $this = $(this), finalDate = $(this).data('countdown');
+        $this.countdown(finalDate, function (event) {
+            if (event.elapsed) {
+                $this.empty();
+
+                var input = '';
+                input += '<h2>'
+                input += 'OPUBLIKOWANO'
+                input += '</h2>'
+
+                $this.html(input)
+            }
+            $this.html(event.strftime('%D dni %H:%M:%S'));
+        }).on('finish.countdown', function () {
+            $this.empty();
+
+            var input = '';
+            input += '<h2>'
+            input += 'OPUBLIKOWANO'
+            input += '</h2>'
+
+            $this.html(input)
+        });
+    });
+}

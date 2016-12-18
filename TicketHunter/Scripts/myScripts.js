@@ -19,6 +19,7 @@ $(document).ready(function () {
     });
 
     bindNavbar();
+
 });
 
 
@@ -75,8 +76,8 @@ $(document).ready(function() {
         speed: 500,
         collapsedHeight: 380,
         heightMargin: 16,
-        moreLink: '<a href="#">czytaj więcej...</a>',
-        lessLink: '<a href="#">zwiń</a>'
+        moreLink: '<a class="readmoreStyle" href="#">czytaj więcej...</a>',
+        lessLink: '<a class="readmoreStyle" href="#">zwiń</a>'
     });
 });
 
@@ -184,3 +185,8 @@ $('body').on('click', '.ticketTable', function () {
     //    },
     //});
 });
+
+$('.eventThumbnail').on('click', function () {
+    var id = $(this).find('input:hidden[name="EventID"]').val();
+    window.location.href = "/Event/ShowEvent?eventId=" + id
+})

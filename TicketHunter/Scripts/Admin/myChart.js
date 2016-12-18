@@ -47,7 +47,6 @@ $(document).ready(function () {
                     'max-width: 400px; max-height: 200px; font-size: 20px; color: black;background-color: white; border: 2px solid black',   
                 onChartRendered: function (chart) {
                     $("#chart").css("border", "1px solid #bababa");
-                    console.log(chart)
                 },             
                 onObjectClicked(object, selectedTicketType) {
                     if (object.status === 'free') {
@@ -79,40 +78,37 @@ $(document).ready(function () {
                     }
                 },
                 onObjectSelected(object, selectedTicketType) {
-                    var e = 1
+ 
                     $('#reservationInfo').one('shown.bs.modal', function () {
-                        e = 0;
-                        //var rowNumber = $('#reserveDetails').find('#currentObject').attr('data-label-parent');
-                        //var seatNumber = $('#reserveDetails').find('#currentObject').attr('data-label-own');
-                        //var category = $('#reserveDetails').find('#currentObject').attr('data-label-category');
-                        //var uuid = $('#reserveDetails').find('#currentObject').attr('data-uuid');
                         $('.ticketCount').on('change', function () {
                             var count = $(this).val();
                             var labelObjectArray = [];
-                            var result = parseInt(object.labels.own);
+                            var result = parseInt(object.labels.own);                           
                             labelObjectArray.push([object.labels.parent + '-' + object.labels.own])
+                            $('body').find('.seats').html('');
+                            $('body').find('.seats').append(object.labels.own);
                             for (var i = 1; i < count; i++) {
                                 if (object.status == 'free') {
                                     result += 1;
-                                    console.log('OBJECT' + object.status)
                                     labelObjectArray.push([object.labels.parent + '-' + result])
                                 }
-                                console.log(labelObjectArray)
-                                $('body').find('.seats').append(','+result)
+                                $('body').find('.seats').append(',' + result);
                             }
                             chart.clearSelection();
-                            if (object.status == 'free') {
-                                chart.selectObjects(labelObjectArray)
-                            } else {
-                                alert('brak wolnych miejsc')
-                            }
-                            $('.reserveBtn').on('click', function () {
+                            //alert(object.status)
+                            //if (object.status == 'free') {
+                            chart.selectObjects(labelObjectArray)
+                            //} else {
+                            //    alert('brak wolnych miejsc')
+                            //}
+                            $('.reserveBtn').unbind().on('click', function () {
                                 var labelStringArray = [];
                                 $.each(labelObjectArray, function (index, value) {
                                     $.each(value, function (index, value) {
                                         labelStringArray.push(value)
                                     })
                                 })
+                                //labelStringArray.push(object.labels.parent + '-' + object.labels.own);
                                 multipleReservation(labelStringArray, ticket)
                             })
                             $('#reservationInfo').on('hidden.bs.modal', function () {
@@ -126,7 +122,6 @@ $(document).ready(function () {
                             
                         })
                     })
-                    console.log(object)
                 },
                 objectCategory: function (object, categories, defaultCategory, extraConfig) {
                     //extraConfig.arrayCategory.push(categories)
@@ -161,6 +156,7 @@ $(document).ready(function () {
         }
     });
     function singleReservation(object, ticket) {
+        alert('single')
         $.ajax({
             type: "POST",
             url: "https://app.seats.io/api/reservationToken/829ec0d2-42b6-481e-86d4-b23b7f8f7691/create",
@@ -180,6 +176,7 @@ $(document).ready(function () {
         });
     }
     function multipleReservation(objectArray, ticket) {
+        console.log(objectArray)
         $.ajax({
             type: "POST",
             url: "https://app.seats.io/api/reservationToken/829ec0d2-42b6-481e-86d4-b23b7f8f7691/create",
@@ -220,5 +217,4 @@ $(document).ready(function () {
         }
     )
     }
-
 });

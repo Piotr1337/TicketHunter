@@ -171,7 +171,7 @@ namespace TicketHunter.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> MemberRegisterSummary(AuthModelView model)
         {
-            if (ModelState.IsValid)
+             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {UserName = model.RegisterModel.Email, Email = model.RegisterModel.Email};
                 var result = await UserManager.CreateAsync(user, model.RegisterModel.Password);

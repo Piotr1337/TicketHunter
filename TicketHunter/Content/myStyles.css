@@ -353,37 +353,6 @@ a.list-group-item.active small {
 #UserAddressModel_Country_chosen {
   margin-top: 15px;
 }
-@media (max-width: 767px) {
-  /*.navbar-default .navbar-nav .open .dropdown-menu {
-    > li > a {
-      color: @colDefault;
-      &:hover, &:focus {
-        color: @colHighlight; }}
-    > .active {
-      > a, > a:hover, > a:focus {
-        color: @colHighlight;
-        background-color: @bgHighlight; }}}*/
-  #searchInput {
-    height: 40px;
-    margin-left: 5%;
-  }
-  #nav-first-row {
-    height: 200px;
-    margin-left: -50px;
-    padding-left: 50px;
-    padding-right: 50px;
-    border-bottom: 1px #c2c2c2 solid;
-    background-color: #f4f4f4;
-  }
-  #login-dp {
-    background-color: inherit;
-    color: #ffffff;
-  }
-  #login-dp .bottom {
-    background-color: inherit;
-    border-top: 0 none;
-  }
-}
 .error_content {
   position: absolute;
   top: 38%;
@@ -391,11 +360,28 @@ a.list-group-item.active small {
   left: -230px;
   right: -230px;
 }
+.maxLetters {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 300px;
+}
+.artistsIcon {
+  padding-right: 10px;
+  color: #7E7E7E;
+}
+.readmoreStyle {
+  font-size: 20px;
+  padding-bottom: 20px;
+}
 .pb20 {
   padding-bottom: 20px;
 }
 .pt50 {
   padding-top: 50px;
+}
+.fs30 {
+  font-size: 30px;
 }
 .mt50 {
   margin-top: 50px;
@@ -436,4 +422,49 @@ a.list-group-item.active small {
 }
 .displayNone {
   display: none;
+}
+.eventThumbnail:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+@media (max-width: 321px) {
+  #searchInput {
+    margin-left: 5%;
+    width: 20px !important;
+  }
+}
+@media (max-width: 767px) {
+  /*.navbar-default .navbar-nav .open .dropdown-menu {
+    > li > a {
+      color: @colDefault;
+      &:hover, &:focus {
+        color: @colHighlight; }}
+    > .active {
+      > a, > a:hover, > a:focus {
+        color: @colHighlight;
+        background-color: @bgHighlight; }}}*/
+  #searchInput {
+    height: 40px;
+    margin-left: 5%;
+    width: 150px !important;
+  }
+  .eac-square {
+    width: 100px !important;
+  }
+  #nav-first-row {
+    height: 200px;
+    margin-left: -50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-bottom: 1px #c2c2c2 solid;
+    background-color: #f4f4f4;
+  }
+  #login-dp {
+    background-color: inherit;
+    color: #ffffff;
+  }
+  #login-dp .bottom {
+    background-color: inherit;
+    border-top: 0 none;
+  }
 }

@@ -266,8 +266,6 @@
     <Compile Include="Infrastructure\EmailService.cs" />
     <Compile Include="Infrastructure\FacebookBackChannelHandler.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
-    <Compile Include="Infrastructure\PublicationJob.cs" />
-    <Compile Include="Infrastructure\PublicationScheduler.cs" />
     <Compile Include="Mappings\AutoMapperConfiguration.cs" />
     <Compile Include="Mappings\DomainToViewModelMappingProfile.cs" />
     <Compile Include="Mappings\ViewModelToDomainMappingProfile.cs" />
@@ -298,6 +296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\adminStyles.css" />
+    <Content Include="Content\Admin\animate.min.css" />
     <Content Include="Content\Admin\bootstrap-datetimepicker-build.css" />
     <Content Include="Content\Admin\chosen.css" />
     <Content Include="Content\Admin\LoginPage.css">
@@ -345,12 +344,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Admin\animatedModal.min.js" />
     <Content Include="Scripts\Admin\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\Admin\bootstrap-switch.min.js" />
     <Content Include="Scripts\Admin\chosen.jquery.min.js" />
     <Content Include="Scripts\Admin\datetimepickerScripts.js" />
     <Content Include="Scripts\Admin\fullcalendar.js" />
     <Content Include="Scripts\Admin\fullcalendar.min.js" />
+    <Content Include="Scripts\Admin\jquery.countdown.min.js" />
     <Content Include="Scripts\Admin\locale-all.js" />
     <Content Include="Scripts\Admin\moment-with-locales.min.js" />
     <Content Include="Scripts\Admin\moment.js" />
@@ -473,6 +474,7 @@
     <Content Include="Views\Admin\ChartCreator.cshtml" />
     <Content Include="Views\Chart\ReservingInfoSummary.cshtml" />
     <Content Include="Views\Chart\BestAvaiableSummary.cshtml" />
+    <Content Include="Views\Admin\Shared\EventDetailsSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

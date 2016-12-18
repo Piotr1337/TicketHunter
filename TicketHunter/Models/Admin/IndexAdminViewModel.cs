@@ -7,5 +7,7 @@ namespace TicketHunter.Models.Admin
     {
         public IEnumerable<Events> IndexEvents { get; set; }
         public IEnumerable<Artists> IndexArtists { get; set; }
+        public IEnumerable<Ticket> IndexTickets { get; set; }
+        public Events Event { get; set; }
     }
 }

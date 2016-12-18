@@ -4,34 +4,43 @@
     @foreach (var eve in Model.IndexEvents.Where(x => !x.Published))
     {
         <div class="hidden-md hidden-sm col-xs-12 col-lg-3" data-pubid="@eve.EventID">
-            <a href="#" id="linkEvent">
-                <div class="thumbnail">
+                <div class="thumbnail eventThumbnail">
                     @if (eve.ImageData != null)
                     {
                         <img class="img-responsive center-block"
-                             src="@Url.Action("GetImage", "Event", new {eve.EventID})" />
+                             src="@Url.Action("GetImage", "Event", new { eve.EventID })" />
                     }
                     <div class="caption">
-                        <h4>@Html.RouteLink(eve.EventName, new { controller = "Event", action = "ShowEvent", eventId = eve.EventID })</h4>
+                        @*<button type="button" class="btn btn-primary btn-lg eventDetails" data-toggle="modal" data-eventId="@eve.EventID" data-target="#eventDetailsModal">
+                            Launch demo modal
+                        </button>*@
+                        <a  class="eventDetails" data-toggle="modal" data-eventId="@eve.EventID"  data-target="#eventDetailsModal">@eve.EventName</a>
+                        @*<h4>@Html.RouteLink(eve.EventName, new { controller = "Event", action = "ShowEvent", eventId = eve.EventID })</h4>*@
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-12">
-                                <h3>Data publikacji:</h3>
-                                <h4><b>@eve.PublicationDate.Value.Date.ToLongDateString()</b> o godzinie: <b>@eve.PublicationDate.Value.Date.ToShortTimeString()</b></h4>
-                            </div>                           
+                                <h3><i class="fa fa-calendar fa-lg pr10" aria-hidden="true"></i>Data publikacji:</h3>
+                                <h4><b>@eve.PublicationDate.Value.Date.ToLongDateString()</b> o godzinie: <b>@eve.PublicationDate.Value.TimeOfDay</b></h4>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <h3>Pozostało:</h3>
-                                <h4>14:12:00 12:33</h4>
+                            <div class="col-md-12">
+                                <h3><i class="fa fa-clock-o fa-lg pr10" aria-hidden="true"></i>Pozostało:</h3>
+                                <div data-countdown="@String.Format("{0:yyyy'/'MM'/'dd HH:mm}", eve.PublicationDate)" id=",LVBHQ" class="publishInfoStyle">
+                                </div>
                             </div>
-                            <div class="hidden-md col-xs-6 col-sm-6 col-md-6">
-                                <input type="button" class="btn btn-primary publicationBtn" value="Opublikuj teraz" />
-                            </div>
-                        </div>                           
-                    </div>
-                    @*<a href="@Url.Action("ShowEvent", "Event", new { eventId = Model.EventID })" class="btn btn-primary btn-md" role="button" id='buyTicket'><i class="fa fa-ticket" aria-hidden="true"></i>&nbsp;Kup bilet</a>*@
+                        </div>
+                    </div>               
                 </div>
-            </a>
+        </div>
+        <div class="modal fade" tabindex="-1" role="dialog" id="eventDetailsModal" data-url="@Url.Action("EventDetailsSummary")">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content eventContainer">
+
+                </div>
+            </div>
         </div>
     }
 </div>
+
+
+

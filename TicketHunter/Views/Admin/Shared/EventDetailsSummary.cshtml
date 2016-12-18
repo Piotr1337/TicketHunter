@@ -1,0 +1,44 @@
+﻿@model TicketHunter.Models.Admin.IndexAdminViewModel
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">@Model.Event.EventName</h4>
+</div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                @if (Model.Event.ImageData != null)
+                {
+                    <img class="img-responsive center-block"
+                         src="@Url.Action("GetImage", "Event", new { Model.Event.EventID })" />
+                }
+                <h3><i class="fa fa-calendar fa-lg pr10" aria-hidden="true"></i>Data publikacji:</h3>
+                <div class="publishInfoStyle">@Model.Event.PublicationDate.Value.ToLongDateString()</div>
+                <h3><i class="fa fa-clock-o fa-lg pr10" aria-hidden="true"></i>Pozostało:</h3>
+                <div data-countdown="@String.Format("{0:yyyy'/'MM'/'dd HH:mm}", Model.Event.PublicationDate)" id="NMK" class="publishInfoStyle">
+                    <b><i class="fa fa-spinner fa-spin fa-3x fa-fw loaderTime"></i></b>
+                </div>
+                <h3><i class="fa fa-tag fa-lg pr10" aria-hidden="true"></i>Nazwa wydarzenia:</h3>
+                <div class="publishInfoStyle">@Model.Event.EventName</div>
+                <h3><i class="fa fa-calendar fa-lg pr10" aria-hidden="true"></i>Start:</h3>
+                <div class="publishInfoStyle">@Model.Event.EventStartDateTime.Value.ToLongDateString()</div>
+                <h3><i class="fa fa-calendar fa-lg pr10" aria-hidden="true"></i>Koniec:</h3>
+                <div class="publishInfoStyle">@Model.Event.EventEndDateTime.Value.ToLongDateString()</div>
+            </div>
+            <div class="col-md-9">
+                @foreach (var item in Model.IndexTickets.Where(x => x.EventID == Model.Event.EventID))
+                {
+                    <h2>@item.Location</h2>
+                    <img src="@string.Format("https://app.seats.io/api/chart/{0}/thumbnail", item.ChartKey)" />
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+</div>
+    <!--Your modal content goes here-->
+   
+
