@@ -287,6 +287,7 @@
     <Compile Include="Models\MemberRegisterViewModel.cs" />
     <Compile Include="Models\NavbarViewModel.cs" />
     <Compile Include="Models\ReserveInfoViewModel.cs" />
+    <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\TicketViewModel.cs" />
     <Compile Include="Models\UserAddressViewModel.cs" />
     <Compile Include="Models\UserDataViewModel.cs" />

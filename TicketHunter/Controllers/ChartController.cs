@@ -9,7 +9,7 @@ using TicketHunter.Models;
 
 namespace TicketHunter.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "User")]
     public class ChartController : Controller
     {
         ITicketRepository _ticketRepository;

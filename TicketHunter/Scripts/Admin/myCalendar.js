@@ -178,7 +178,13 @@ $(document).ready(function () {
 
 
     function dblClickFunction(date) {
-        if (date <= dateObjectForEnd) {
+        var clickedDate = new Date(date._d.getFullYear(), date._d.getMonth(), date._d.getDate());
+        var readyClickedDate = clickedDate.getFullYear() + "-" + ("0" + (clickedDate.getMonth() +1)).slice(-2) + "-" +  ("0" + (clickedDate.getDate())).slice(-2)
+        var found = $.inArray(readyClickedDate, list) > -1;
+        console.log(readyClickedDate)
+        console.log(list)
+        console.log(found)
+        if (found) {
             $('#ticketModal').modal('show');
             $('#ticketModal').on('hidden.bs.modal', function () {
                 $(this).find('form')[0].reset();

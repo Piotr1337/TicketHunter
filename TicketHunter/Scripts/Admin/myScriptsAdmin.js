@@ -85,7 +85,7 @@ $('body').on('click', '#deleteArtist', function () {
     var artistId = $(this).data('artistid');
     swal({
         title: "Jesteś pewny?",
-        text: "Nie będziesz w stanie odzyskać tego wydarzenia!",
+        text: "Nie będziesz w stanie odzyskać tego artysty/zespołu!",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",

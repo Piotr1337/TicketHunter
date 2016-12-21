@@ -41,16 +41,14 @@ namespace TicketHunter.Controllers
             return PartialView("NavBarSummary", model);
         }
 
-        public async Task<ViewResult> List(int? categoryId,int? subcategoryId)
+        public ViewResult List(int? categoryId,int? subcategoryId)
         {
 
             if (subcategoryId.HasValue)
             {
                 EventsViewModel model = new EventsViewModel
                 {
-                    //Events = _repository.Events.Where(x => x.EventSubCategoryID == subcategoryId)
-                    Events = await _repository.EventsAsync(null,subcategoryId)
-
+                    Events = _repository.EventsAsync(null,subcategoryId)
                 };
                 return View(model);
             }
@@ -58,7 +56,7 @@ namespace TicketHunter.Controllers
             {
                 EventsViewModel model = new EventsViewModel
                 {
-                    Events =  await _repository.EventsAsync(null,null)
+                    Events =  _repository.EventsAsync(null,null)
                 };
                 return View(model);
             }
@@ -66,7 +64,7 @@ namespace TicketHunter.Controllers
             {
                 EventsViewModel model = new EventsViewModel
                 {
-                    Events = await _repository.EventsAsync(categoryId, null)
+                    Events = _repository.EventsAsync(categoryId, null)
                 };
                 return View(model);
             }
@@ -86,9 +84,9 @@ namespace TicketHunter.Controllers
             });
         }
 
-        public async Task<FileContentResult> GetImage(int? eventId)
+        public FileContentResult GetImage(int? eventId)
         {
-            var theEvent = await _repository.GetEventAsync(eventId);
+            var theEvent = _repository.GetEventAsync(eventId);
             if (theEvent != null)
             {
                 return File(theEvent.ImageData, theEvent.ImageMimeType);
@@ -113,13 +111,34 @@ namespace TicketHunter.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> AutoCompleteSearch()
+        public JsonResult AutoCompleteSearch()
         {
-            var events = await _repository.EventsAsync(null,null);
-            //List<Artists> artists = _artistRep.Artists.ToList();
+
+            List<SearchViewModel> serachResult = new List<SearchViewModel>();
+            var events = _repository.Events.ToList();
+            var artists = _artistRep.Artists.ToList();
+
+            foreach (var item in events)
+            {
+                SearchViewModel model = new SearchViewModel();
+                model.Name = item.EventName;
+                model.Type = "event";
+                model.Icon = item.Categories.Icon;
+                model.Id = item.EventID;
+                serachResult.Add(model);
+            }
+            foreach (var item in artists)
+            {
+                SearchViewModel model = new SearchViewModel();
+                model.Name = item.Nickname;
+                model.Type = "artist";
+                model.Icon = "glyphicon glyphicon-user";
+                model.Id = item.ArtistID;
+                serachResult.Add(model);
+            }
 
 
-            var eventsResult = events.Select(s => new { Id = s.EventID, type = "wydarzenie", Name = s.EventName, Icon = s.Categories.Icon });
+            var result = serachResult.Select(s => new { Name = s.Name, Type = s.Type, Icon = s.Icon, Id = s.Id });
             //var artistsResult = artists.Select(a => new {Id = a.ArtistID, Name = a.Nickname});
 
             //var tt = new
@@ -128,7 +147,7 @@ namespace TicketHunter.Controllers
             //    artists = artists.Select(a => new { Id = a.ArtistID, Name = a.Nickname })
             //};
 
-            return Json(eventsResult, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
     }

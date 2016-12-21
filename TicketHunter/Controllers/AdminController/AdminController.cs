@@ -247,7 +247,7 @@ namespace TicketHunter.Controllers.AdminController
                 Location = item.Location,
                 Price = item.Price,
                 ArtistID = item.ArtistID,
-                ChartKey = item.ChartKey
+                SecretKey = item.SecretKey
             }).ToList();
         }
 
@@ -266,7 +266,7 @@ namespace TicketHunter.Controllers.AdminController
                                  date = FormatIso8601(new DateTimeOffset(e.DateOfEvent.Year,e.DateOfEvent.Month,e.DateOfEvent.Day,e.DateOfEvent.Hour,e.DateOfEvent.Minute,e.DateOfEvent.Second, TimeSpan.FromHours(+2))),
                                  location = e.Location,
                                  eventID = e.EventID,
-                                 chartKey = e.ChartKey,
+                                 chartKey = e.SecretKey,
                                  beginDate = _repository.GetEvent(eventId).EventStartDateTime.Value.ToShortDateString(),
                                  finishDate = _repository.GetEvent(eventId).EventEndDateTime.Value.ToShortDateString()
                              };

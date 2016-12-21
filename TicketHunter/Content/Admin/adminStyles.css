@@ -3,16 +3,19 @@
 }
 #deleteEvent:hover {
   border-color: red;
-  color: red;
   background-color: white;
 }
+#deleteArtist:hover {
+  border-color: red;
+  background-color: white;
+}
+
 #editEvent:hover {
   border-color: #337ab7;
   background-color: white;
+  color: #337ab7 !important;
 }
-#editEvent a:link {
-  color: #337ab7;
-}
+
 #editInPop {
   cursor: pointer;
   padding-right: 20px;
@@ -96,7 +99,7 @@
 
 }
 
-.modal-dialog {
+.event-details-dialog {
   position:absolute;
   top:50% !important;
   transform: translate(0, -50%) !important;
@@ -106,7 +109,7 @@
   width:90%;
   height:80%;
 }
-.modal-content {
+.eventContainer {
   min-height:100%;
   position:absolute;
   top:0;
@@ -114,7 +117,7 @@
   left:0;
   right:0; 
 }
-.modal-body {
+.event-details-body {
   position:absolute;
   top:45px; 
   bottom:45px;  
@@ -122,7 +125,7 @@
   right:0;
   overflow-y:auto;
 }
-.modal-footer {
+.event-details-footer {
   position:absolute;
   bottom:0;
   left:0;

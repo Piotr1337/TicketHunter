@@ -113,7 +113,7 @@
                     <td>@Html.Action("GetCategory", "Admin", new { CategoryId = item.CategoryID })</td>
                     <td>
                         <button class="btn btn-default" type="button" data-artistid="@item.ArtistID" id="deleteArtist">Usuń</button>
-                        @Html.ActionLink("Edytuj", "ArtistEdit", new { eventId = item.ArtistID }, new { @class = "btn btn-default", id = "editEvent", @role = "button" })
+                        @Html.ActionLink("Edytuj", "ArtistEdit", new { artistId = item.ArtistID }, new { @class = "btn btn-default", id = "editEvent", @role = "button" })
                     </td>
                 </tr>
             }
@@ -134,8 +134,8 @@
                     <td>@Html.ActionLink(item.BandName, "ArtistEdit", new { artistId = item.ArtistID })</td>
                     <td>@Html.Action("GetCategory", "Admin", new { CategoryId = item.CategoryID })</td>
                     <td>
-                        <button class="btn btn-default" type="button" data-eventid="@item.ArtistID" id="deleteEvent">Usuń</button>
-                        @Html.ActionLink("Edytuj", "ArtistEdit", new { eventId = item.ArtistID }, new { @class = "btn btn-default", id = "editEvent", @role = "button" })
+                        <button class="btn btn-default" type="button" data-artistid="@item.ArtistID" id="deleteArtist">Usuń</button>
+                        @Html.ActionLink("Edytuj", "ArtistEdit", new { artistId = item.ArtistID }, new { @class = "btn btn-default", id = "editEvent", @role = "button" })
                     </td>
                 </tr>
             }

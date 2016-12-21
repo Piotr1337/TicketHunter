@@ -32,8 +32,12 @@ var options = {
 
     template: {
         type: "custom",
-        method: function(value, item) {
-            return "<i id='searchInputIcons' class='" + item.Icon + "'></i>&nbsp;" + "<p id='searchInputValue' data-item-id='" + item.Id + "' >" + value + "</p>";
+        method: function (value, item) {
+            if (item.type === "event") {
+                return "<i id='searchInputIcons' class='" + item.Icon + "'></i>&nbsp;" + "<p id='searchInputValue' data-item-id='" + item.Id + "' >" + value + "</p>";
+            } else {
+                return "<i id='searchInputIcons' class='" + item.Icon + "'></i>&nbsp;" + "<p id='searchInputValue' data-item-id='" + item.Id + "' >" + value + "</p>";
+            }
         },
     },
 

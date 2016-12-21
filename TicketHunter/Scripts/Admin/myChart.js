@@ -78,7 +78,6 @@ $(document).ready(function () {
                     }
                 },
                 onObjectSelected(object, selectedTicketType) {
- 
                     $('#reservationInfo').one('shown.bs.modal', function () {
                         $('.ticketCount').on('change', function () {
                             var count = $(this).val();
@@ -88,19 +87,14 @@ $(document).ready(function () {
                             $('body').find('.seats').html('');
                             $('body').find('.seats').append(object.labels.own);
                             for (var i = 1; i < count; i++) {
-                                if (object.status == 'free') {
-                                    result += 1;
-                                    labelObjectArray.push([object.labels.parent + '-' + result])
-                                }
+                                result += 1;
+                                labelObjectArray.push([object.labels.parent + '-' + result])
                                 $('body').find('.seats').append(',' + result);
                             }
                             chart.clearSelection();
-                            //alert(object.status)
-                            //if (object.status == 'free') {
+                            console.log(labelObjectArray)
                             chart.selectObjects(labelObjectArray)
-                            //} else {
-                            //    alert('brak wolnych miejsc')
-                            //}
+
                             $('.reserveBtn').unbind().on('click', function () {
                                 var labelStringArray = [];
                                 $.each(labelObjectArray, function (index, value) {
