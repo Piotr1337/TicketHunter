@@ -111,3 +111,5 @@ C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Common.Logging.Core.xml
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Quartz.pdb
 C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Quartz.xml
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Facebook.dll
+C:\Users\Piotrek\Documents\Visual Studio 2015\Projects\TicketHunter\TicketHunter\bin\Facebook.xml

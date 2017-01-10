@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -72,14 +73,21 @@ namespace TicketHunter.Controllers
 
         public ViewResult ShowEvent(int? eventId)
         {
-            List<Artists> getArtistsFromEvent = _ticketRep.Tickets
-                .Where(x => x.EventID == eventId)
-                .Select(ticket => _artistRep.GetArtists(ticket.ArtistID))
-                .ToList();
+            List<Artists> artists = new List<Artists>();
+            var tickets = _ticketRep.Tickets.Where(x => x.EventID == eventId);
+            foreach (var ti in tickets)
+            {
+                var ticket = _ticketRep.TicketArtists.Where(x => x.TicketID == ti.TicketID);
+                foreach (var ar in ticket)
+                {
+                    var art = _artistRep.GetArtists(ar.ArtistID);
+                    artists.Add(art);
+                }
+            }
             return View(new EventsViewModel()
             {
                 Event = _repository.GetEvent(eventId),
-                Artists = getArtistsFromEvent.Distinct().ToList(),
+                Artists = artists,
                 Tickets = _ticketRep.Tickets
             });
         }
@@ -111,9 +119,14 @@ namespace TicketHunter.Controllers
         }
 
         [HttpPost]
-        public JsonResult AutoCompleteSearch()
+        public JsonResult AutoCompleteSearch(string phrase)
         {
-
+            //var res = LuceneSearch.Search(phrase, "");
+            
+            //foreach (var item in res)
+            //{
+            //    Debug.WriteLine("Rezultat:" + item.EventName);
+            //}
             List<SearchViewModel> serachResult = new List<SearchViewModel>();
             var events = _repository.Events.ToList();
             var artists = _artistRep.Artists.ToList();
@@ -138,14 +151,9 @@ namespace TicketHunter.Controllers
             }
 
 
-            var result = serachResult.Select(s => new { Name = s.Name, Type = s.Type, Icon = s.Icon, Id = s.Id });
-            //var artistsResult = artists.Select(a => new {Id = a.ArtistID, Name = a.Nickname});
+            //var result = res.Select(s => new { Name = s.EventName, Type = "Event", Id = s.EventID });
 
-            //var tt = new
-            //{
-            //    events = events.Select(s => new { Id = s.EventID, Name = s.EventName, Icon = s.Categories.Icon }),
-            //    artists = artists.Select(a => new { Id = a.ArtistID, Name = a.Nickname })
-            //};
+            var result = serachResult.Select(s => new { Name = s.Name, Type = s.Type, Icon = s.Icon, Id = s.Id });
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

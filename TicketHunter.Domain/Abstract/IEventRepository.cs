@@ -8,12 +8,11 @@ namespace TicketHunter.Domain.Abstract
     {
         IEnumerable<Events> Events { get; }
 
-        Task<IEnumerable<Events>> EventsAsync(int? categoryId, int? subcategoryId);
-
+        IEnumerable<Events> EventsAsync(int? categoryId, int? subcategoryId);
 
         Events GetEvent(int? eventId);
 
-        Task<Events> GetEventAsync(int? eventId);
+        Events GetEventAsync(int? eventId);
 
 
         void SaveEvent(Events theEvent);

@@ -10,10 +10,10 @@
         <h2>Edycja @Model.Title</h2>
     </div>
 </div>
-<div class="container">
+<div class="container-fluid">
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-lg-3">
             @using (Html.BeginForm("TicketEdit", "Admin", FormMethod.Post))
             {
                 @Html.HiddenFor(m => m.TicketID)
@@ -37,34 +37,40 @@
                 @Html.ValidationMessageFor(m => m.Location)
                 <br/>
                 @Html.LabelFor(m => m.ArtistID)
-                @Html.DropDownListFor(m => m.ArtistID, Model.ArtistList, new { @class = "form-control chosen", style = "width: 360px;", id = "artistChosen" });
+                @Html.DropDownListFor(m => m.ArtistID, Model.ArtistList, new { @class = "form-control chosen", multiple = "", style = "width: 360px;", id = "artistChosen" });
                 <br/>
+                <br />
                 @Html.LabelFor(m => m.Price)
                 @Html.TextBoxFor(m => m.Price, null, new {@class = "form-control"})
                 @Html.ValidationMessageFor(m => m.Price)
                 <br/>
-                @Html.LabelFor(m => m.PublicKey)
-                @Html.TextBoxFor(m => m.PublicKey, null, new {@class = "form-control"})
-                @Html.ValidationMessageFor(m => m.PublicKey)
-                <br/>
                 @Html.LabelFor(m => m.EventKey)
                 @Html.TextBoxFor(m => m.EventKey, null, new {@class = "form-control"})
-                @Html.ValidationMessageFor(m => m.EventKey)
-
-
-                <div class="panel-footer col-md-12">
-                    <input type="submit" value="Zapisz" class="btn btn-primary" />
-                    @Html.ActionLink("Anuluj i wróć do listy", "Index", null, new
-                    {
-                        @class = "btn btn-default"
-                    })
-                </div>
+                @Html.ValidationMessageFor(m => m.EventKey)               
             }
         </div>
-        <div class="col-md-6">
-            
+        <div class="col-lg-9">
+            <div id="chartEditor"></div>
         </div>
+    </div>
+    <div class="row mt-50">
+        <div class="col-lg-12">
+            <input type="submit" value="Zapisz" class="btn btn-primary" />
+            @Html.ActionLink("Anuluj i wróć do listy", "Index", null, new
+           {
+               @class = "btn btn-default"
+           })
+        </div>
+
     </div>
 </div>
 <br/>
 
+<script src="~/Scripts/Admin/myChosen.js"></script>
+<script>
+    new seatsio.SeatingChartDesigner({
+        divId: "chartEditor",
+        designerKey: "b3ff3f87-10be-4d80-83cb-c52fc4c89b72",
+        chartKey: "@Model.ChartKey"
+    }).render();
+</script>

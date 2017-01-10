@@ -13,7 +13,7 @@ using TicketHunter.Domain.Entities;
 
 namespace TicketHunter.Concrete
 {
-    public class LuceneSearch
+    public static class LuceneSearch
     {
         private static string _luceneDir = Path.Combine(HttpContext.Current.Request.PhysicalApplicationPath, "lucene_index");
         private static FSDirectory _directoryTemp;
@@ -48,6 +48,8 @@ namespace TicketHunter.Concrete
 
             // add entry to index
             writer.AddDocument(doc);
+            writer.Optimize();
+            writer.Flush(true, true, true);
         }
 
         public static void AddUpdateLuceneIndex(IEnumerable<Events> sampleDatas)
@@ -116,7 +118,7 @@ namespace TicketHunter.Concrete
             return hits.Select(hit => _mapLuceneDocumentToData(searcher.Doc(hit.Doc))).ToList();
         }
 
-        private static Query parseQuery(string searchQuery, QueryParser parser)
+        public static Query parseQuery(string searchQuery, QueryParser parser)
         {
             Query query;
             try
@@ -130,7 +132,7 @@ namespace TicketHunter.Concrete
             return query;
         }
 
-        private static IEnumerable<Events> _search(string searchQuery, string searchField = "")
+        public static IEnumerable<Events> _search(string searchQuery, string searchField = "")
         {
             // validation
             if (string.IsNullOrEmpty(searchQuery.Replace("*", "").Replace("?", ""))) return new List<Events>();

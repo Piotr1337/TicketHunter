@@ -11,7 +11,11 @@ namespace TicketHunter.Domain.Abstract
     {
         IEnumerable<Ticket> Tickets { get; }
 
-        void SaveTicket(Ticket theTicket);
+        IEnumerable<TicketArtists> TicketArtists { get; }
+
+        int SaveTicket(Ticket theTicket);
+
+        void SaveTicketArtists(TicketArtists theTicketArtists);
 
         Ticket DeleteTicket(int ticketId);
 

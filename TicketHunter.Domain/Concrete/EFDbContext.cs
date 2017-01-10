@@ -10,17 +10,17 @@ namespace TicketHunter.Domain.Entities
         public EFDbContext()
             : base("name=EFDbContext")
         {
-
         }
 
         public virtual DbSet<Artists> Artists { get; set; }
         public virtual DbSet<Categories> Categories { get; set; }
+        public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Events> Events { get; set; }
         public virtual DbSet<SubCategories> SubCategories { get; set; }
         public virtual DbSet<Ticket> Ticket { get; set; }
-        public virtual DbSet<UserProfileDetails> UserProfileDetails { get; set; }
+        public virtual DbSet<TicketArtists> TicketArtists { get; set; }
         public virtual DbSet<UserAddress> UserAddress { get; set; }
-        public virtual DbSet<Countries> Countries { get; set; }
+        public virtual DbSet<UserProfileDetails> UserProfileDetails { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,6 +40,12 @@ namespace TicketHunter.Domain.Entities
             modelBuilder.Entity<Ticket>()
                 .Property(e => e.Price)
                 .HasPrecision(18, 0);
+
+            modelBuilder.Entity<Ticket>()
+                .HasMany(e => e.TicketArtists)
+                .WithRequired(e => e.Ticket)
+                .WillCascadeOnDelete(false);
+
         }
     }
 }

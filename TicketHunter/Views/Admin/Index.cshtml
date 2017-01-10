@@ -60,8 +60,8 @@
                 <li>
                     <a href="#tile"><i class="fa fa-wrench fa-lg pr10" aria-hidden="true"></i> Panel główny</a>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-bar-chart fa-lg pr10" aria-hidden="true"></i>Statystyki</a>
+                <li id="chartRender">
+                    <a href="#charts"><i class="fa fa-bar-chart fa-lg pr10" aria-hidden="true"></i>Statystyki</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-users fa-lg pr10" aria-hidden="true"></i>Użytkownicy</a>
@@ -79,6 +79,9 @@
                     </div>
                     <div class="col-lg-12 customPanel" id="pub">
                         @Html.Partial("Shared/PublicationsSummary", Model)
+                    </div>
+                    <div class="col-lg-12 customPanel" id="charts">
+                        @Html.Partial("Shared/ChartsSummary", Model)
                     </div>
                 </div>
             </div>

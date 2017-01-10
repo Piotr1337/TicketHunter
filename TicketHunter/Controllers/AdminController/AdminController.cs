@@ -160,9 +160,10 @@ namespace TicketHunter.Controllers.AdminController
         }
 
         [HttpPost]
-        public ActionResult Edit(Events theEvent, HttpPostedFileBase image = null)
+        public ActionResult Edit(Events theEvent, HttpPostedFileBase image)
         {
             var viewModel = Mapper.Map<Events, AdminViewModel>(theEvent);
+
             if (ModelState.IsValid)
             {
                 if (image != null)
@@ -171,12 +172,16 @@ namespace TicketHunter.Controllers.AdminController
                     viewModel.ImageData = new byte[image.ContentLength];
                     image.InputStream.Read(viewModel.ImageData, 0, image.ContentLength);
                 }
-                ViewData["Category"] = viewModel;
+                else
+                {
+                    var images = _repository.GetEvent(theEvent.EventID);
+                    viewModel.ImageData = images.ImageData;
+                    viewModel.ImageMimeType = images.ImageMimeType;
+                }
                 var toModel = Mapper.Map<AdminViewModel, Events>(viewModel);
                 toModel.Published = false;
                 _repository.SaveEvent(toModel);
                 Scheduler();
-                TempData["message"] = $"Zapisano {theEvent.EventName}";
                 return RedirectToAction("Index");
             }
             else
@@ -215,6 +220,17 @@ namespace TicketHunter.Controllers.AdminController
             });
         }
 
+        public JsonResult GetArtists(int ticketId)
+        {
+            List<int> idArt = new List<int>();
+            var listArtists = _ticketRepository.TicketArtists.Where(x => x.TicketID == ticketId);
+            foreach (var item in listArtists)
+            {
+                idArt.Add(item.ArtistID);
+            }
+            return Json(idArt.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult DeleteTicket(int ticketId)
         {
             Ticket deletedTicket = _ticketRepository.DeleteTicket(ticketId);
@@ -228,9 +244,15 @@ namespace TicketHunter.Controllers.AdminController
 
         public ViewResult TicketEdit(int ticketId)
         {
+            List<int> artId = new List<int>();
             var theTicket = _ticketRepository.Tickets.FirstOrDefault(x => x.TicketID == ticketId);
             var viewModel = Mapper.Map<Ticket, TicketViewModel>(theTicket);
-
+            foreach (var item in _ticketRepository.TicketArtists.Where(x => x.TicketID == ticketId))
+            {
+                artId.Add(item.ArtistID);
+            }
+            viewModel.ArtistList = _artistRepository.ArtistsForDropList;
+            viewModel.ArtistID = artId.ToArray();
             return View(viewModel);
         }
 
@@ -246,7 +268,7 @@ namespace TicketHunter.Controllers.AdminController
                 Title = item.Title,
                 Location = item.Location,
                 Price = item.Price,
-                ArtistID = item.ArtistID,
+                //ArtistID = item.ArtistID,
                 SecretKey = item.SecretKey
             }).ToList();
         }
@@ -261,7 +283,7 @@ namespace TicketHunter.Controllers.AdminController
                                  id = e.TicketID,
                                  price = e.Price,
                                  title = e.Title,
-                                 artistID = e.ArtistID,
+                                 //artistID = e.ArtistID,
                                  //artistName = artistRepository.GetArtists(e.ArtistID).Nickname,
                                  date = FormatIso8601(new DateTimeOffset(e.DateOfEvent.Year,e.DateOfEvent.Month,e.DateOfEvent.Day,e.DateOfEvent.Hour,e.DateOfEvent.Minute,e.DateOfEvent.Second, TimeSpan.FromHours(+2))),
                                  location = e.Location,
@@ -291,7 +313,17 @@ namespace TicketHunter.Controllers.AdminController
             model.DateOfEvent = readyDate;
             if (ModelState.IsValid)
             {
-                _ticketRepository.SaveTicket(model);
+                var id = _ticketRepository.SaveTicket(model);
+                if(theTicket.ArtistID != null)
+                {
+                    foreach (var item in theTicket.ArtistID)
+                    {
+                        TicketArtists ta = new TicketArtists();
+                        ta.ArtistID = item;
+                        ta.TicketID = id;
+                        _ticketRepository.SaveTicketArtists(ta);
+                    }
+                }
             }
             return RedirectToAction("Edit","Admin", new { eventId = model.EventID });
         }
@@ -393,6 +425,36 @@ namespace TicketHunter.Controllers.AdminController
                 Event = _repository.GetEvent(id)
             };
             return PartialView("Shared/EventDetailsSummary", model);
+        }
+
+        public JsonResult PopulateChart(string type)
+        {
+            IEnumerable<object> result = new List<object>();
+            switch (type)
+            {
+                case "category":
+                    result = from n in _repository.Events
+                                 group n by n.EventCategoryID into g
+                                 select new
+                                 {
+                                     value = g.Count(),
+                                     label = _catRepo.Categories.Where(x => x.EventCategoryID == g.Key).Select(x => x.EventCategoryName)
+                                 };
+                    break;
+                case "subcategory":
+                    result = from n in _repository.Events
+                             group n by n.EventSubCategoryID into g
+                             select new
+                             {
+                                 value = g.Count(),
+                                 label = _catRepo.SubCategories.Where(x => x.EventSubCategoryID == g.Key).Select(x => x.EventSubCategoryName)
+                             };
+                    break;
+                default:
+                    break;
+            }
+           
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -4,7 +4,6 @@
     $('.datetimepicker3').datetimepicker({ format: 'DD-MM-YYYY HH:mm', locale: 'pl' });
 });
 
-
 Date.prototype.addDays = function (days) {
     var dat = new Date(this.valueOf());
     dat.setDate(dat.getDate() + days);
@@ -100,16 +99,15 @@ $(document).ready(function () {
                 console.log(event.chartKey)
                 //Popover
                 var url = "/Admin/GetImage?artistId=" + event.artistID;
-                var input = "<h6>";
-                input += event.artistName;
-                input += "</h6>";
-                input += '<img src="https://app.seats.io/api/chart/' + event.chartKey + '/thumbnail"/>';
-                input += "<p class='bg-info' id='customBgPop' style='padding: 5px;margin-top: 10px;'>";
-                input += "<span class='glyphicon glyphicon-calendar'></span>";
-                input += "&nbsp; 2016-09-15 (22:00)";
-                input += "</p>";
-                input += "<a id='editInPop'><span class='glyphicon glyphicon-pencil' style='color: blue'></span>Edytuj</a>";
-                input += "<a id='cancelInPop'><span class='glyphicon glyphicon-remove' style='color: red'></span>Anuluj</a>";
+                var input = "";
+                input += '<div class="row">';
+                input += '<div class="col-md-6 popEdit">';
+                input += "Edytuj";
+                input += '</div>';
+                input += '<div class="col-md-6 popDelete">';
+                input += "Usuń";
+                input += '</div>';
+                input += '</div>';
 
                 if (view.name === "agendaWeek" || view.name === "agendaDay") {
                     if (event.allDay === true) {
@@ -146,13 +144,17 @@ $(document).ready(function () {
                     if (!element.is(e.target) && element.has(e.target).length === 0 && $('.popover').has(e.target).length === 0)
                         element.popover('hide');
                 });
-
                 element.bind('dblclick',
                     function() {
                         var url = "/Admin/TicketEdit?ticketId=" + event.id;
                         window.location.href = url;
                     });
-
+                element.on('shown.bs.popover', function () {
+                    $('body').on('click', '.popEdit', function () {
+                        var url = "/Admin/TicketEdit?ticketId=" + event.id;
+                        window.location.href = url;
+                    })
+                })
             },
             dayClick: dayClickCallback,
         });
@@ -175,7 +177,6 @@ $(document).ready(function () {
         slotDate = null;
         $("#calendar").off("mousemove", forgetSlot);
     }
-
 
     function dblClickFunction(date) {
         var clickedDate = new Date(date._d.getFullYear(), date._d.getMonth(), date._d.getDate());

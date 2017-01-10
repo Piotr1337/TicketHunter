@@ -7,10 +7,15 @@ namespace TicketHunter.Domain.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [JsonObject(IsReference = true)]
     [Table("Ticket")]
     public partial class Ticket
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Ticket()
+        {
+            TicketArtists = new HashSet<TicketArtists>();
+        }
+
         public int TicketID { get; set; }
 
         public int EventID { get; set; }
@@ -27,14 +32,23 @@ namespace TicketHunter.Domain.Entities
 
         public int? OrderID { get; set; }
 
-        public int ArtistID { get; set; }
-
+        [StringLength(50)]
         public string PublicKey { get; set; }
 
+        [StringLength(50)]
         public string EventKey { get; set; }
+
+        [StringLength(50)]
+        public string SecretKey { get; set; }
+
+        [StringLength(50)]
         public string ChartKey { get; set; }
 
         [JsonIgnore]
         public virtual Events Events { get; set; }
+
+        [JsonIgnore]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TicketArtists> TicketArtists { get; set; }
     }
 }

@@ -16,6 +16,10 @@
   color: #337ab7 !important;
 }
 
+#chartEditor{
+    height: 1000px;
+}
+
 #editInPop {
   cursor: pointer;
   padding-right: 20px;
@@ -66,9 +70,13 @@
 }
 
 .content > .customPanel:target{
-    display:block;
+    display: block;
 }
 
+svg {
+    width:100%;
+    height: 100%;
+ }
 .adminPanelLi{
     color: #fff;
     cursor: default;
@@ -136,6 +144,65 @@
     text-align: center;
     font-size: 25px !important;
     color: black !important;
+}
+
+.popEdit{
+    padding: 10px 10px 10px 10px;
+    border-right: 1px solid grey;
+}
+
+.popover{
+    width: 300px;
+    text-align: center;
+    font-size: 17px;
+}
+
+.pubImg{
+    margin-bottom: 40px;
+}
+
+.styleChart{
+    border: 1px solid #e5e5e5;
+    height: 350px;
+    width: 600px;
+}
+
+.styleChart:hover{
+        box-shadow: 
+        0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.styleChart svg{
+    margin-bottom: 50px;
+}
+
+.popDelete{
+    padding: 10px 10px 10px 10px;
+}
+
+.popover-content{
+    padding: 0px;
+}
+
+.popover-content .row{
+    margin: 0px;
+}
+
+.popEdit:hover{
+    background-color: #f4f4f4;
+    cursor: pointer;
+    color: black;
+}
+
+.popDelete:hover{
+    background-color: #f4f4f4;
+    cursor: pointer;
+    color: black;
+}
+
+.mt-50{
+    margin-top: 50px;
 }
 
 .eventThumbnail{

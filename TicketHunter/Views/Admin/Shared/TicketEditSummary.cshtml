@@ -36,9 +36,9 @@
                     @Html.DropDownListFor(m => m.ArtistID, Model.ArtistList, new {@class = "form-control chosen", multiple = "", id= "artistChosen" })
                     <br/>
                     <br/>
-                    @Html.LabelFor(m => m.Price)
-                    @Html.TextBoxFor(m => m.Price, null, new {@class = "form-control"})
-                    @Html.ValidationMessageFor(m => m.Price)
+                    @Html.LabelFor(m => m.ChartKey)
+                    @Html.TextBoxFor(m => m.ChartKey, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.ChartKey)
                     <br />
                     @Html.LabelFor(m => m.EventKey)
                     @Html.TextBoxFor(m => m.EventKey, null, new { @class = "form-control" })

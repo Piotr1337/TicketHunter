@@ -25,7 +25,9 @@ $(document).ready(function () {
 
 var options = {
     url: "/Event/AutoCompleteSearch",
-
+    data: {
+        phrase: $("#searchInput").val()
+    },
     getValue: function (element) {
         return element.Name;
     },

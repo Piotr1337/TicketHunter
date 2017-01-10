@@ -15,7 +15,7 @@ namespace TicketHunter.Models
         public int EventID { get; set; }
 
         [DisplayName("Artysta/Zespół")]
-        public int ArtistID { get; set; }
+        public int[] ArtistID { get; set; }
 
         [DisplayName("Data wydarzenia")]
         public DateTime DateOfEvent { get; set; }

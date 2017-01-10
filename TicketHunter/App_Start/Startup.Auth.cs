@@ -8,6 +8,7 @@ using Owin;
 using TicketHunter.Models;
 using Microsoft.Owin.Security.Facebook;
 using TicketHunter.Infrastructure;
+using System.Threading.Tasks;
 
 namespace TicketHunter
 {
@@ -57,20 +58,29 @@ namespace TicketHunter
             //   consumerSecret: "");
 
 
-            app.UseFacebookAuthentication(new FacebookAuthenticationOptions()
-            {
-                AppId = "114476152369227",
-                AppSecret = "d79c4be51d60bb392faa8fc4ae038d6f",
-                BackchannelHttpHandler = new FacebookBackChannelHandler(),
-                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name,location"
-            });
-
-            //app.UseFacebookAuthentication(new FacebookAuthenticationOptions
+            //app.UseFacebookAuthentication(new FacebookAuthenticationOptions()
             //{
             //    AppId = "114476152369227",
             //    AppSecret = "d79c4be51d60bb392faa8fc4ae038d6f",
-            //    Scope = { "email" }
+            //    BackchannelHttpHandler = new FacebookBackChannelHandler(),
+            //    UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name,location"
             //});
+
+            app.UseFacebookAuthentication(new FacebookAuthenticationOptions
+            {
+                AppId = "114476152369227",
+                AppSecret = "d79c4be51d60bb392faa8fc4ae038d6f",
+                Scope = { "email" },
+                Provider = new FacebookAuthenticationProvider
+                {
+                    OnAuthenticated = context =>
+                    {
+                        context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                        return Task.FromResult(true);
+                    },
+                    
+                }
+            });
 
             //app.UseFacebookAuthentication(
             //   appId: "114476152369227",

@@ -1,18 +1,5 @@
 ﻿
 
-//$('#bandOrArtist').on('switchChange.bootstrapSwitch', function (event, state) {
-//    if (state) {
-//        $('#FirstName').prop('disabled', true);
-//        $('#LastName').prop('disabled', true);
-//        $('#BandName').prop('disabled', false).val('');
-//    } else {
-//        $('#FirstName').prop('disabled', false).val('');
-//        $('#LastName').prop('disabled', false).val('');
-//        $('#BandName').prop('disabled', true);
-//    }
-//});
-
-
 
 $('#showAllEvents').click(function () {
     $('#allArtistsAdmin').slideUp("fast");

@@ -13,6 +13,7 @@ using Microsoft.Owin.Security;
 using TicketHunter.Domain.Abstract;
 using TicketHunter.Domain.Entities;
 using TicketHunter.Models;
+using Facebook;
 
 namespace TicketHunter.Controllers
 {
@@ -70,6 +71,7 @@ namespace TicketHunter.Controllers
                 return View(model);
             }
             var user = await UserManager.FindByNameAsync(model.LoginModel.Email);
+
             if (user != null)
             {
                 if (!await UserManager.IsEmailConfirmedAsync(user.Id))
@@ -363,14 +365,20 @@ namespace TicketHunter.Controllers
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
-            var email = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
             }
-
-            // Sign in the user with this external login provider if the user already has a login
+            if(loginInfo.Login.LoginProvider == "Facebook")
+            {
+                var identity = AuthenticationManager.GetExternalIdentity(DefaultAuthenticationTypes.ExternalCookie);
+                var access_token = identity.FindFirstValue("FacebookAccessToken");
+                var fb = new FacebookClient(access_token);
+                dynamic myInfo = fb.Get("/me?fields=email"); 
+                loginInfo.Email = myInfo.email;
+            }
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -378,15 +386,65 @@ namespace TicketHunter.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 case SignInStatus.Failure:
                 default:
-                    // If the user does not have an account, then prompt the user to create an account
-                    ViewBag.ReturnUrl = returnUrl;
-                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation",
-                        new ExternalLoginConfirmationViewModel { UserName = loginInfo.ExternalIdentity.Name ,Email = email});
+                    var user = new ApplicationUser { UserName = loginInfo.DefaultUserName , Email = loginInfo.Email };
+                    if (UserManager.FindByEmail(user.Email) == null)
+                    {
+                        var resultt = await UserManager.CreateAsync(user);
+                        if (resultt.Succeeded)
+                        {
+                            resultt = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                            if (resultt.Succeeded)
+                            {
+                                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                return RedirectToLocal(returnUrl);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var resultt = await UserManager.AddLoginAsync(user.Id, loginInfo.Login);
+                        if (resultt.Succeeded)
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
+                    }
+                    return RedirectToLocal(returnUrl);
             }
+            //else
+            //{
+            //    ViewBag.ReturnUrl = returnUrl;
+            //    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+            //    var newUser = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email };
+            //    var newResult = await UserManager.CreateAsync(newUser, "Nhy6&*()");
+            //    await SignInManager.PasswordSignInAsync(loginInfo.Email, "Nhy6&*()",
+            //        false, shouldLockout: false);
+            //    return RedirectToAction("List", "Event");
+            //}
+            //switch (result)
+            //{
+            //    case SignInStatus.Success:
+            //        return RedirectToLocal(returnUrl);
+            //    case SignInStatus.LockedOut:
+            //        return View("Lockout");
+            //    case SignInStatus.RequiresVerification:
+            //        return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
+            //    case SignInStatus.Failure:
+            //    default:
+            //        // If the user does not have an account, then prompt the user to create an account
+            //        ViewBag.ReturnUrl = returnUrl;
+            //        ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+            //        var newUser = new ApplicationUser { UserName = loginInfo.Email, Email = loginInfo.Email };
+            //        var newResult = await UserManager.CreateAsync(newUser, "Nhy6&*()");
+            //        await SignInManager.PasswordSignInAsync(loginInfo.Email, "Nhy6&*()",
+            //            false, shouldLockout: false);
+            //        return RedirectToLocal(returnUrl);
+            //        //return View("ExternalLoginConfirmation",
+            //        //    new ExternalLoginConfirmationViewModel { UserName = loginInfo.ExternalIdentity.Name ,Email = loginInfo.Email });
+            //}
         }
 
         //

@@ -14,7 +14,12 @@ namespace TicketHunter.Domain.Concrete
             get { return context.Ticket; }
         }
 
-        public void SaveTicket(Ticket theTicket)
+        public IEnumerable<TicketArtists> TicketArtists
+        {
+            get { return context.TicketArtists; }
+        }
+
+        public int SaveTicket(Ticket theTicket)
         {
             if (theTicket.TicketID == 0)
             {
@@ -29,9 +34,12 @@ namespace TicketHunter.Domain.Concrete
                     dbEntry.Location = theTicket.Location;
                     dbEntry.Title = theTicket.Title;
                     dbEntry.Price = theTicket.Price;
+                    dbEntry.PublicKey = "829ec0d2-42b6-481e-86d4-b23b7f8f7691";
+                    dbEntry.SecretKey = "9081cdd9-d70c-43e8-87ba-41ec8778c518";
                 }
             }
             context.SaveChanges();
+            return theTicket.TicketID;
         }
 
         public Ticket DeleteTicket(int ticketId)
@@ -49,6 +57,23 @@ namespace TicketHunter.Domain.Concrete
         {
             Ticket dbEntry = context.Ticket.Find(ticketId);
             return dbEntry;
+        }
+
+        public void SaveTicketArtists(TicketArtists theTicketArtists)
+        {
+            if (theTicketArtists.TicketArtistsID == 0)
+            {
+                context.TicketArtists.Add(theTicketArtists);
+            }
+            else
+            {
+                TicketArtists dbEntry = context.TicketArtists.Find(theTicketArtists.TicketID);
+                if (dbEntry != null)
+                {
+                    
+                }
+            }
+            context.SaveChanges();
         }
     }
 }

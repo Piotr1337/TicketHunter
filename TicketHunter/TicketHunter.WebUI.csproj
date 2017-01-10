@@ -56,6 +56,10 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
@@ -306,6 +310,7 @@
     <Content Include="Content\Admin\LoginPage.min.css">
       <DependentUpon>LoginPage.css</DependentUpon>
     </Content>
+    <Content Include="Content\Admin\morris.css" />
     <Content Include="Content\Admin\simple-sidebar.css" />
     <Content Include="Content\chart.css">
       <DependentUpon>chart.less</DependentUpon>
@@ -356,8 +361,10 @@
     <Content Include="Scripts\Admin\locale-all.js" />
     <Content Include="Scripts\Admin\moment-with-locales.min.js" />
     <Content Include="Scripts\Admin\moment.js" />
+    <Content Include="Scripts\Admin\morris.min.js" />
     <Content Include="Scripts\Admin\myCalendar.js" />
     <Content Include="Scripts\Admin\myChart.js" />
+    <Content Include="Scripts\Admin\myChosen.js" />
     <Content Include="Scripts\Admin\myMultiSelect.js" />
     <Content Include="Scripts\Admin\myScriptsAdmin.js" />
     <Content Include="Scripts\Admin\summernote-pl-PL.min.js" />
@@ -476,6 +483,7 @@
     <Content Include="Views\Chart\ReservingInfoSummary.cshtml" />
     <Content Include="Views\Chart\BestAvaiableSummary.cshtml" />
     <Content Include="Views\Admin\Shared\EventDetailsSummary.cshtml" />
+    <Content Include="Views\Admin\Shared\ChartsSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

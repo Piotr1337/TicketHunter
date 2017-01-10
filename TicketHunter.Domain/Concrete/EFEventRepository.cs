@@ -7,6 +7,7 @@ using AutoMapper;
 using TicketHunter.Domain.Abstract;
 using TicketHunter.Domain.Entities;
 using TicketHunter.Concrete;
+using System.Web.Mvc;
 
 namespace TicketHunter.Domain.Concrete
 {
@@ -22,21 +23,21 @@ namespace TicketHunter.Domain.Concrete
             }
         }
 
-        public async Task<IEnumerable<Events>> EventsAsync(int? categoryId, int? subcategoryId)
+        public IEnumerable<Events> EventsAsync(int? categoryId, int? subcategoryId)
         {
             if (categoryId != null)
             {
-                var eventList = await Task.Run(() => context.Events.Where(x => x.EventCategoryID == categoryId));
+                var eventList =  context.Events.Where(x => x.EventCategoryID == categoryId);
                 return eventList;
             }
             else if (subcategoryId != null)
             {
-                var eventList = await Task.Run(() => context.Events.Where(x => x.EventSubCategoryID == subcategoryId));
+                var eventList = context.Events.Where(x => x.EventSubCategoryID == subcategoryId);
                 return eventList;
             }
             else
             {
-                var eventList = await Task.Run(() => context.Events);
+                var eventList = context.Events;
                 return eventList;
             }
         }
@@ -48,9 +49,9 @@ namespace TicketHunter.Domain.Concrete
             return foundEvent;           
         }
 
-        public async Task<Events> GetEventAsync(int? eventId)
+        public Events GetEventAsync(int? eventId)
         {
-            var foundEvent = await context.Events.FindAsync(eventId);
+            var foundEvent = context.Events.Find(eventId);
             return foundEvent;
         }
 
